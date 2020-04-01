@@ -9,7 +9,7 @@ const SignupForm = ({ navigation, handlerSignup, handlerLoginLink }) => {
     return (
         <>
             <div className="wrapper_form">
-                <Logo logoClass="signup__logo" txtRightClass="text_white" />
+                <Logo logoClass="signup_logo" txtRightClass="text_white" />
                 <form className="signup_form" onSubmit={handlerSignup}>
                     <h1 className="signup_form__header">Регистрация</h1>
                     <div className="signup_form__text">
@@ -24,27 +24,27 @@ const SignupForm = ({ navigation, handlerSignup, handlerLoginLink }) => {
                         inputClass="signup_form__email"
                         type="email"
                         name="email"
-                        placeholder="Адрес электронной почты"
+                        placeholder="Адрес электронной почты*"
                     />
                     <div className="signup_form__fullname">
                         <InputText
                             inputClass="signup_form__firstname"
                             type="text"
                             name="firstname"
-                            placeholder="Имя"
+                            placeholder="Имя*"
                         />
                         <InputText
                             inputClass="signup_form__lastname"
                             type="text"
                             name="lastname"
-                            placeholder="Фамилия"
+                            placeholder="Фамилия*"
                         />
                     </div>
                     <InputText
                         inputClass="signup_form__password"
                         type="password"
                         name="password"
-                        placeholder="Пароль"
+                        placeholder="Пароль*"
                     />
                     <ButtonYellow
                         buttonClass="signup_form__submit"

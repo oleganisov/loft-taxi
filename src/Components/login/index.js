@@ -21,7 +21,7 @@ const LoginForm = ({
     return (
         <>
             <div className="wrapper_form">
-                <Logo logoClass="login__logo" txtRightClass="text_white" />
+                <Logo logoClass="login_logo" txtRightClass="text_white" />
                 <form className="login_form" onSubmit={handlerLogin}>
                     <h1 className="login_form__header">Войти</h1>
                     <div className="login_form__text">
@@ -33,16 +33,16 @@ const LoginForm = ({
                         </a>
                     </div>
                     <InputText
-                        inputClass="login_form__user"
+                        inputClass="login_form__user input_resize"
                         type="text"
                         name="username"
-                        placeholder="Имя пользователя"
+                        placeholder="Имя пользователя*"
                     />
                     <InputText
-                        inputClass="login_form__password"
+                        inputClass="login_form__password input_resize"
                         type="password"
                         name="password"
-                        placeholder="Пароль"
+                        placeholder="Пароль*"
                     />
                     <ButtonYellow
                         buttonClass="login_form__submit"
