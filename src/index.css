@@ -7,7 +7,7 @@
 
 body {
     margin: 0;
-    font-family: Forte, -apple-system, BlinkMacSystemFont, 'Arial', 'Segoe UI',
+    font-family: -apple-system, BlinkMacSystemFont, 'Arial', 'Segoe UI',
         'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
         'Helvetica Neue', sans-serif;
     font-weight: normal;
@@ -47,4 +47,14 @@ h2,
 h3,
 h4 {
     margin: 0;
+}
+* {
+    box-sizing: border-box;
+}
+.wrapper_form {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('./assets/img/login-background.jpg');
 }

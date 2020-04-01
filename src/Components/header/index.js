@@ -11,7 +11,7 @@ const Header = ({ handlerMenu }) => {
     ];
     return (
         <header className="header">
-            <Logo inputClass="header__logo" />
+            <Logo logoClass="header__logo" />
             <ul className="header__list">
                 {headerMenu.map(item => (
                     <li key={item.id} className="header__item">

@@ -2,9 +2,9 @@ import React from 'react';
 import marker from '../assets/img/marker.svg';
 import './SimpleElements.css';
 
-const ButtonYellow = ({ inputClass, text }) => (
+const ButtonYellow = ({ buttonClass, text }) => (
     <div style={{ textAlign: 'right' }}>
-        <button className={`${inputClass} button_yellow`}>{text}</button>
+        <button className={`${buttonClass} button_yellow`}>{text}</button>
     </div>
 );
 
@@ -17,11 +17,11 @@ const InputText = ({ inputClass, type, name, placeholder }) => (
     />
 );
 
-const Logo = ({ inputClass }) => (
-    <div className={`${inputClass} logo`}>
+const Logo = ({ logoClass, txtRightClass = '' }) => (
+    <div className={`${logoClass} logo`}>
         <img className="logo__img" alt="balloon" src={marker} />
-        <span className="log__text_left">Loft</span>
-        <span className="log__text_right">Taxi</span>
+        <span className="logo__text_left">Loft</span>
+        <span className={`logo__text_right ${txtRightClass}`}>Taxi</span>
     </div>
 );
 

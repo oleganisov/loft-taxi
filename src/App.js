@@ -2,7 +2,8 @@ import React from 'react';
 import Layout from './Components/layout';
 import Map from './Components/map';
 import Profile from './Components/profile';
-// import LoginForm from './Components/login';
+import LoginForm from './Components/login';
+import SignupForm from './Components/signup';
 
 class App extends React.Component {
     state = { navigation: '' };
@@ -23,6 +24,7 @@ class App extends React.Component {
                     <Map navigation={navigation} />
                     <Profile navigation={navigation} />
                 </Layout>
+                {/* <SignupForm /> */}
             </div>
         );
     }

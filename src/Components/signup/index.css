@@ -1,0 +1,32 @@
+.signup__logo {
+    margin-right: 215px;
+}
+.signup_form {
+    max-width: 503px;
+    max-height: 566px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 65px 50px;
+    text-align: left;
+    background-color: #fff;
+}
+.signup_form__header {
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.signup_form__text {
+    margin-bottom: 50px;
+}
+.signup_form__span {
+    margin-right: 10px;
+}
+
+.signup_form__fullname {
+    display: flex;
+}
+.signup_form__firstname {
+    margin-right: 15px;
+}
