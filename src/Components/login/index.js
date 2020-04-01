@@ -1,20 +1,36 @@
 import React from 'react';
+import SignupForm from '../signup';
 import { ButtonYellow, InputText, Logo } from '../SimpleElements';
 
 import './index.css';
 
-const LoginForm = () => {
+const LoginForm = ({
+    navigation,
+    handlerLogin,
+    handlerSignup,
+    handlerLoginLink,
+    handlerSignupLink
+}) => {
+    if (navigation === 'signup')
+        return (
+            <SignupForm
+                handlerSignup={handlerSignup}
+                handlerLoginLink={handlerLoginLink}
+            />
+        );
     return (
         <>
             <div className="wrapper_form">
                 <Logo logoClass="login__logo" txtRightClass="text_white" />
-                <form className="login_form">
+                <form className="login_form" onSubmit={handlerLogin}>
                     <h1 className="login_form__header">Войти</h1>
                     <div className="login_form__text">
                         <span className="login_form__span">
                             Новый пользователь?
                         </span>
-                        <a href="/signup">Зарегистрируйтесь</a>
+                        <a href="/signup" onClick={handlerSignupLink}>
+                            Зарегистрируйтесь
+                        </a>
                     </div>
                     <InputText
                         inputClass="login_form__user"

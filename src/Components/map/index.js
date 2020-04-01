@@ -4,7 +4,7 @@ import './index.css';
 
 const Map = ({ navigation }) => {
     if (navigation !== 'map') return null;
-    return <div>Страница с картой</div>;
+    return <h2>Карта</h2>;
 };
 
 export default Map;

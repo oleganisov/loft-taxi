@@ -1,20 +1,24 @@
 import React from 'react';
+import LoginForm from '../login';
 import { ButtonYellow, InputText, Logo } from '../SimpleElements';
 
 import './index.css';
 
-const Signup = () => {
+const SignupForm = ({ navigation, handlerSignup, handlerLoginLink }) => {
+    if (navigation === 'login') return <LoginForm />;
     return (
         <>
             <div className="wrapper_form">
                 <Logo logoClass="signup__logo" txtRightClass="text_white" />
-                <form className="signup_form">
+                <form className="signup_form" onSubmit={handlerSignup}>
                     <h1 className="signup_form__header">Регистрация</h1>
                     <div className="signup_form__text">
                         <span className="signup_form__span">
                             Уже зарегистрирован?
                         </span>
-                        <a href="/login">Войти</a>
+                        <a href="/login" onClick={handlerLoginLink}>
+                            Войти
+                        </a>
                     </div>
                     <InputText
                         inputClass="signup_form__email"
@@ -52,4 +56,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default SignupForm;

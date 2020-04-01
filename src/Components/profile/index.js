@@ -4,7 +4,7 @@ import './index.css';
 
 const Profile = ({ navigation }) => {
     if (navigation !== 'profile') return null;
-    return <div>Страница профиля</div>;
+    return <h2>Профиль</h2>;
 };
 
 export default Profile;
