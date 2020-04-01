@@ -1,0 +1,29 @@
+.button_yellow {
+    background-color: rgb(255, 198, 23);
+    border-radius: 4px;
+    padding: 18px 35px;
+}
+
+.form_input {
+    border: none;
+    border-bottom: 1px solid rgb(234, 234, 234);
+    margin-bottom: 40px;
+}
+.form_input:focus {
+    border-bottom: 1px solid rgb(20, 115, 230);
+}
+
+.logo {
+    font-family: 'Forte';
+    font-size: 36px;
+    color: rgb(255, 198, 23);
+}
+.logo__img {
+    margin-right: 5px;
+}
+.log__text_left {
+    margin-right: 5px;
+}
+.log__text_right {
+    color: rgb(50, 50, 50);
+}

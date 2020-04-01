@@ -1,13 +1,50 @@
+@font-face {
+    font-family: 'Forte';
+    src: url('./assets/fonts/ForteMT.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: Forte, -apple-system, BlinkMacSystemFont, 'Arial', 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+input {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
 }

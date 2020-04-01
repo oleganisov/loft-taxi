@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import Layout from './Components/layout';
+import Map from './Components/map';
+import Profile from './Components/profile';
+// import LoginForm from './Components/login';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = { navigation: '' };
+    handlerMenu = e => {
+        e.preventDefault();
+        if (e.target) {
+            let link = e.target.getAttribute('href');
+            this.setState({ navigation: link });
+        }
+    };
+
+    render() {
+        const { navigation } = this.state;
+
+        return (
+            <div className="App">
+                <Layout handlerMenu={this.handlerMenu}>
+                    <Map navigation={navigation} />
+                    <Profile navigation={navigation} />
+                </Layout>
+            </div>
+        );
+    }
 }
 
 export default App;
