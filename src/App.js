@@ -3,7 +3,6 @@ import Layout from './Components/layout';
 import Map from './Components/map';
 import Profile from './Components/profile';
 // import LoginForm from './Components/login';
-import './App.css';
 
 class App extends React.Component {
     state = { navigation: '' };
