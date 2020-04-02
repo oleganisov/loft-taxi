@@ -33,13 +33,13 @@ const LoginForm = ({
                         </a>
                     </div>
                     <InputText
-                        inputClass="login_form__user input_resize"
+                        inputClass="login_form__user"
                         type="text"
                         name="username"
                         placeholder="Имя пользователя*"
                     />
                     <InputText
-                        inputClass="login_form__password input_resize"
+                        inputClass="login_form__password"
                         type="password"
                         name="password"
                         placeholder="Пароль*"
