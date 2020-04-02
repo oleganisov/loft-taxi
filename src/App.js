@@ -3,9 +3,10 @@ import Layout from './Components/layout';
 import Map from './Components/map';
 import Profile from './Components/profile';
 import LoginForm from './Components/login';
+import SignupForm from './Components/signup';
 
 class App extends React.Component {
-    state = { navigation: '', auth: false };
+    state = { navigation: 'login' };
     handlerMenu = e => {
         e.preventDefault();
         if (e.target) {
@@ -17,7 +18,7 @@ class App extends React.Component {
     };
     handlerLogin = e => {
         e.preventDefault();
-        this.setState({ navigation: 'map', auth: true });
+        this.setState({ navigation: 'map' });
     };
     handlerLoginLink = e => {
         e.preventDefault();
@@ -25,7 +26,7 @@ class App extends React.Component {
     };
     handlerSignup = e => {
         e.preventDefault();
-        this.setState({ navigation: 'map', auth: true });
+        this.setState({ navigation: 'map' });
     };
     handlerSignupLink = e => {
         e.preventDefault();
@@ -33,27 +34,34 @@ class App extends React.Component {
     };
 
     render() {
-        const { navigation, auth } = this.state;
+        const { navigation } = this.state;
 
-        if (!auth)
+        if (navigation === 'login')
             return (
                 <LoginForm
-                    navigation={navigation}
                     handlerLogin={this.handlerLogin}
-                    handlerSignup={this.handlerSignup}
-                    handlerLoginLink={this.handlerLoginLink}
                     handlerSignupLink={this.handlerSignupLink}
                 />
             );
-
-        return (
-            <div className="App">
+        else if (navigation === 'signup')
+            return (
+                <SignupForm
+                    handlerSignup={this.handlerSignup}
+                    handlerLoginLink={this.handlerLoginLink}
+                />
+            );
+        else if (navigation === 'map')
+            return (
                 <Layout handlerMenu={this.handlerMenu}>
-                    <Map navigation={navigation} />
-                    <Profile navigation={navigation} />
+                    <Map />
                 </Layout>
-            </div>
-        );
+            );
+        else if (navigation === 'profile')
+            return (
+                <Layout handlerMenu={this.handlerMenu}>
+                    <Profile />
+                </Layout>
+            );
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo } from '../SimpleElements';
+import Logo from '../../common/logo';
 
 import './index.css';
 

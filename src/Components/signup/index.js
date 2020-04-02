@@ -1,11 +1,11 @@
 import React from 'react';
-import LoginForm from '../login';
-import { ButtonYellow, InputText, Logo } from '../SimpleElements';
+import InputText from '../common/inputText';
+import Logo from '../common/logo';
+import ButtonActive from '../common/buttonActive';
 
 import './index.css';
 
-const SignupForm = ({ navigation, handlerSignup, handlerLoginLink }) => {
-    if (navigation === 'login') return <LoginForm />;
+const SignupForm = ({ handlerSignup, handlerLoginLink }) => {
     return (
         <>
             <div className="wrapper_form">
@@ -46,7 +46,7 @@ const SignupForm = ({ navigation, handlerSignup, handlerLoginLink }) => {
                         name="password"
                         placeholder="Пароль*"
                     />
-                    <ButtonYellow
+                    <ButtonActive
                         buttonClass="signup_form__submit"
                         text="Войти"
                     />

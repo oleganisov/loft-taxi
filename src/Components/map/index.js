@@ -2,8 +2,7 @@ import React from 'react';
 
 import './index.css';
 
-const Map = ({ navigation }) => {
-    if (navigation !== 'map') return null;
+const Map = () => {
     return <h2>Карта</h2>;
 };
 
