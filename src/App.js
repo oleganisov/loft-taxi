@@ -11,9 +11,8 @@ class App extends React.Component {
         e.preventDefault();
         if (e.target) {
             let link = e.target.getAttribute('href');
-            link === 'login'
-                ? this.setState({ navigation: link, auth: false })
-                : this.setState({ navigation: link });
+
+            this.setState({ navigation: link });
         }
     };
     handlerLogin = e => {
