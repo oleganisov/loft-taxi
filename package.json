@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "commit": "git-cz",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -30,5 +31,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "cz-customizable": "^6.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./config/git/.cz-config.js"
+    }
   }
 }
