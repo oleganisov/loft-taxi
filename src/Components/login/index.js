@@ -1,13 +1,10 @@
 import React from 'react';
-import InputText from '../common/inputText';
-import { Logo } from 'loft-taxi-mui-theme';
 import { Grid } from '@material-ui/core';
+import { Logo } from 'loft-taxi-mui-theme';
 import Background from '../common/Background';
-import ButtonActive from '../common/buttonActive';
+import LoginForm from './LoginForm';
 
-import './index.css';
-
-const LoginForm = ({ handlerLogin, handlerSignupLink }) => {
+const Login = ({ handlerSignupLink }) => {
     return (
         <Background>
             <Grid
@@ -17,41 +14,13 @@ const LoginForm = ({ handlerLogin, handlerSignupLink }) => {
                 alignItems="center"
                 style={{ minHeight: '100vh' }}
             >
-                <Logo
-                    white={true}
-                    animated={true}
-                    classes={{ logo: 'login_logo' }}
-                />
-                <form className="login_form" onSubmit={handlerLogin}>
-                    <h1 className="login_form__header">Войти</h1>
-                    <div className="login_form__text">
-                        <span className="login_form__span">
-                            Новый пользователь?
-                        </span>
-                        <a href="/signup" onClick={handlerSignupLink}>
-                            Зарегистрируйтесь
-                        </a>
-                    </div>
-                    <InputText
-                        inputClass="login_form__user"
-                        type="text"
-                        name="username"
-                        placeholder="Имя пользователя*"
-                    />
-                    <InputText
-                        inputClass="login_form__password"
-                        type="password"
-                        name="password"
-                        placeholder="Пароль*"
-                    />
-                    <ButtonActive
-                        buttonClass="login_form__submit"
-                        text="Войти"
-                    />
-                </form>
+                <Grid xs={3}>
+                    <Logo white={true} animated={true} />
+                </Grid>
+                <LoginForm handlerSignupLink={handlerSignupLink} />
             </Grid>
         </Background>
     );
 };
 
-export default LoginForm;
+export default Login;

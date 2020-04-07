@@ -3,19 +3,28 @@ import React, { createContext, useState } from 'react';
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-    const [authorized, setAuthorized] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
 
-    const handlerLogin = () => {
-        setAuthorized(true);
+    const handlerLogin = (e) => {
+        e.preventDefault();
+        setUsername(e.target.username.value);
+        setPassword(e.target.password.value);
+        setLoggedIn(true);
     };
     const handlerLogout = () => {
-        setAuthorized(false);
+        setUsername(null);
+        setPassword(null);
+        setLoggedIn(false);
     };
 
     return (
         <AuthContext.Provider
             value={{
-                authorized,
+                isLoggedIn,
+                username,
+                password,
                 login: handlerLogin,
                 logout: handlerLogout,
             }}

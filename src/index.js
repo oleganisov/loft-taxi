@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/app';
 import * as serviceWorker from './serviceWorker';
 import { theme } from 'loft-taxi-mui-theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { AuthProvider } from './Components/authContext';
+import { AuthProvider } from './components/authContext';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 ReactDOM.render(
     <React.StrictMode>
-        <MuiThemeProvider theme={theme}>
-            <AuthProvider>
-                <App />
-            </AuthProvider>
-        </MuiThemeProvider>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+            <MuiThemeProvider theme={theme}>
+                <AuthProvider>
+                    <App />
+                </AuthProvider>
+            </MuiThemeProvider>
+        </MuiPickersUtilsProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

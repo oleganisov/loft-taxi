@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Header from '../common/Header';
 
 const styles = {
     width: '100vw',
-    height: 'calc(100vh - 70px)',
+    height: 'calc(100vh - 66.39px)',
     position: 'absolute',
 };
 
@@ -32,7 +33,12 @@ const Map = () => {
         if (!map) initializeMap({ setMap, mapContainer });
     }, [map]);
 
-    return <div ref={(el) => (mapContainer.current = el)} style={styles} />;
+    return (
+        <>
+            <Header />
+            <div ref={(el) => (mapContainer.current = el)} style={styles} />
+        </>
+    );
 };
 
 export default Map;

@@ -4,14 +4,14 @@ import { withStyles } from '@material-ui/styles';
 import backImage from '../../assets/img/login-background.jpg';
 
 const styles = () => ({
-    bgContainer: {
+    root: {
         backgroundImage: `url(${backImage})`,
         backgroundSize: 'cover',
     },
 });
 
 const Background = ({ classes, children }) => {
-    return <Paper className={classes.bgContainer}>{children}</Paper>;
+    return <Paper className={classes.root}>{children}</Paper>;
 };
 
 export default withStyles(styles)(Background);
