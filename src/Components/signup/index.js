@@ -1,10 +1,17 @@
 import React from 'react';
-import { Logo } from 'loft-taxi-mui-theme';
 import { Grid } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Logo } from 'loft-taxi-mui-theme';
 import Background from '../common/Background';
 import SignupForm from './SignupForm';
 
-const Signup = ({ handlerLoginLink }) => {
+const styles = () => ({
+    logo: {
+        marginRight: '215px',
+    },
+});
+
+const Signup = ({ classes, handlerSignup, handlerLoginLink }) => {
     return (
         <Background>
             <Grid
@@ -14,13 +21,19 @@ const Signup = ({ handlerLoginLink }) => {
                 alignItems="center"
                 style={{ minHeight: '100vh' }}
             >
-                <Grid xs={3}>
-                    <Logo white={true} animated={true} />
-                </Grid>
-                <SignupForm handlerLoginLink={handlerLoginLink} />
+                <Logo
+                    white={true}
+                    animated={true}
+                    classes={{ logo: classes.logo }}
+                />
+
+                <SignupForm
+                    handlerSignup={handlerSignup}
+                    handlerLoginLink={handlerLoginLink}
+                />
             </Grid>
         </Background>
     );
 };
 
-export default Signup;
+export default withStyles(styles)(Signup);

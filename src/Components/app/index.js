@@ -5,7 +5,7 @@ import Login from '../login';
 import Signup from '../signup';
 
 class App extends React.Component {
-    state = { navigation: 'profile' };
+    state = { navigation: 'login' };
     handlerMenu = (e) => {
         e.preventDefault();
         if (e.target) {
@@ -13,11 +13,6 @@ class App extends React.Component {
             this.setState({ navigation: link });
         }
     };
-    // handlerLogin = (e) => {
-    //     e.preventDefault();
-    //     console.log(e.target);
-    //     this.setState({ navigation: 'profile' });
-    // };
     handlerLoginLink = (e) => {
         e.preventDefault();
         this.setState({ navigation: 'login' });
@@ -35,12 +30,7 @@ class App extends React.Component {
         const { navigation } = this.state;
 
         if (navigation === 'login')
-            return (
-                <Login
-                    // handlerLogin={this.handlerLogin}
-                    handlerSignupLink={this.handlerSignupLink}
-                />
-            );
+            return <Login handlerSignupLink={this.handlerSignupLink} />;
         else if (navigation === 'signup')
             return (
                 <Signup

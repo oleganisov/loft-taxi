@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../authContext';
 import {
     Grid,
     FormControl,
@@ -11,10 +10,11 @@ import {
     Paper,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { AuthContext } from '../authContext';
 
 const styles = () => ({
     paper: {
-        padding: '68px 60px',
+        padding: '60px 55px',
     },
     input: {
         marginBottom: '30px',
@@ -22,12 +22,12 @@ const styles = () => ({
 });
 
 const LoginForm = ({ classes, handlerSignupLink }) => {
-    const value = useContext(AuthContext);
-    const handlerLogin = value.login;
+    const authContext = useContext(AuthContext);
+    const handlerLogin = authContext.login;
 
     return (
         <Paper className={classes.paper}>
-            <form className="login_form" onSubmit={handlerLogin}>
+            <form onSubmit={handlerLogin}>
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -49,13 +49,13 @@ const LoginForm = ({ classes, handlerSignupLink }) => {
                         </Link>
                     </Typography>
                     <FormControl required>
-                        <InputLabel htmlFor="user_name">
+                        <InputLabel htmlFor="username">
                             Имя пользователя
                         </InputLabel>
                         <Input
                             className={classes.input}
-                            id="user_name"
-                            name="user_name"
+                            id="username"
+                            name="username"
                             type="text"
                             placeholder="Имя пользователя"
                             required

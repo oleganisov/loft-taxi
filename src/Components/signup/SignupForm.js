@@ -13,16 +13,16 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = () => ({
     paper: {
-        padding: '68px 60px',
+        padding: '60px 55px',
     },
     input: {
         marginBottom: '30px',
     },
 });
-const SignupForm = ({ classes, handlerLoginLink }) => {
+const SignupForm = ({ classes, handlerSignup, handlerLoginLink }) => {
     return (
         <Paper className={classes.paper}>
-            <form className="login_form">
+            <form onSubmit={handlerSignup}>
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -100,7 +100,7 @@ const SignupForm = ({ classes, handlerLoginLink }) => {
                             elevation={0}
                             type="submit"
                         >
-                            Войти
+                            Зарегистрироваться
                         </Button>
                     </Grid>
                 </Grid>
