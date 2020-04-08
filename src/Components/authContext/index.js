@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
     const [password, setPassword] = useState(null);
 
     const handlerLogin = (e) => {
-        e.preventDefault();
         setUsername(e.target.username.value);
         setPassword(e.target.password.value);
         setLoggedIn(true);

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AppBar, Toolbar, Button, Container } from '@material-ui/core';
+import { AuthContext } from '../authContext';
 import { Logo } from 'loft-taxi-mui-theme';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -13,6 +14,9 @@ const styles = () => ({
 });
 
 const Header = ({ classes }) => {
+    const authContext = useContext(AuthContext);
+    const handlerLogout = authContext.logout;
+
     return (
         <AppBar position="static" className={classes.appBar}>
             <Toolbar>
@@ -21,7 +25,7 @@ const Header = ({ classes }) => {
                 </Container>
                 <Button>Карта</Button>
                 <Button>Профиль</Button>
-                <Button>Выйти</Button>
+                <Button onClick={handlerLogout}>Выйти</Button>
             </Toolbar>
         </AppBar>
     );

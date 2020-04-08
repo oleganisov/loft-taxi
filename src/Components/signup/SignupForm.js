@@ -17,6 +17,7 @@ const styles = () => ({
     },
     input: {
         marginBottom: '30px',
+        marginRight: '10px',
     },
 });
 const SignupForm = ({ classes, handlerSignup, handlerLoginLink }) => {

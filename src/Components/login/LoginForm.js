@@ -21,13 +21,19 @@ const styles = () => ({
     },
 });
 
-const LoginForm = ({ classes, handlerSignupLink }) => {
+const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
     const authContext = useContext(AuthContext);
     const handlerLogin = authContext.login;
 
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        handlerLogin(e);
+        handlerNavigation('map');
+    };
+
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerLogin}>
+            <form onSubmit={handlerSubmit}>
                 <Grid container direction="column">
                     <Typography
                         component="h1"

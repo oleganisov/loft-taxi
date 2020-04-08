@@ -11,7 +11,7 @@ const styles = () => ({
     },
 });
 
-const Login = ({ classes, handlerSignupLink }) => {
+const Login = ({ classes, handlerSignupLink, handlerNavigation }) => {
     return (
         <Background>
             <Grid
@@ -26,7 +26,10 @@ const Login = ({ classes, handlerSignupLink }) => {
                     animated={true}
                     classes={{ logo: classes.logo }}
                 />
-                <LoginForm handlerSignupLink={handlerSignupLink} />
+                <LoginForm
+                    handlerSignupLink={handlerSignupLink}
+                    handlerNavigation={handlerNavigation}
+                />
             </Grid>
         </Background>
     );
