@@ -10,10 +10,10 @@ const styles = () => ({
     root: { paddingTop: '50px' },
 });
 
-const Profile = ({ classes }) => {
+const Profile = ({ classes, handlerNavigation }) => {
     return (
         <Background>
-            <Header />
+            <Header handlerNavigation={handlerNavigation} />
             <Grid
                 className={classes.root}
                 container
@@ -35,6 +35,7 @@ const Profile = ({ classes }) => {
 
 Profile.propTypes = {
     classes: PropTypes.object.isRequired,
+    handlerNavigation: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Profile);

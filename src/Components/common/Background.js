@@ -17,7 +17,7 @@ const Background = ({ classes, children }) => {
 
 Background.propTypes = {
     classes: PropTypes.object.isRequired,
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Background);

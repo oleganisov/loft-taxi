@@ -18,13 +18,16 @@ const App = () => {
         e.preventDefault();
         setNavigation('signup');
     };
+    const handlerNavigation = (value) => {
+        setNavigation(value);
+    };
 
     if (isLoggedIn) {
         switch (navigation) {
             case 'profile':
-                return <Profile />;
+                return <Profile handlerNavigation={handlerNavigation} />;
             default:
-                return <Map />;
+                return <Map handlerNavigation={handlerNavigation} />;
         }
     } else {
         switch (navigation) {
