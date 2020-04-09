@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -11,6 +11,7 @@ import {
     Paper,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { AuthContext } from '../authContext';
 
 const styles = () => ({
     paper: {
@@ -21,10 +22,18 @@ const styles = () => ({
         marginRight: '10px',
     },
 });
-const SignupForm = ({ classes, handlerSignup, handlerLoginLink }) => {
+const SignupForm = ({ classes, handlerLoginLink, handlerNavigation }) => {
+    const authContext = useContext(AuthContext);
+    const handlerLogin = authContext.login;
+
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        handlerLogin(e);
+        handlerNavigation('map');
+    };
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSignup}>
+            <form onSubmit={handlerSubmit} id="signup_form">
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -112,8 +121,8 @@ const SignupForm = ({ classes, handlerSignup, handlerLoginLink }) => {
 };
 SignupForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerSignup: PropTypes.func.isRequired,
     handlerLoginLink: PropTypes.func.isRequired,
+    handlerNavigation: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);

@@ -14,10 +14,6 @@ const App = () => {
         e.preventDefault();
         setNavigation('login');
     };
-    const handlerSignup = (e) => {
-        e.preventDefault();
-        setNavigation('map');
-    };
     const handlerSignupLink = (e) => {
         e.preventDefault();
         setNavigation('signup');
@@ -35,8 +31,8 @@ const App = () => {
             case 'signup':
                 return (
                     <Signup
-                        handlerSignup={handlerSignup}
                         handlerLoginLink={handlerLoginLink}
+                        handlerNavigation={setNavigation}
                     />
                 );
             default:

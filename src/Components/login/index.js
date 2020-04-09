@@ -36,7 +36,7 @@ const Login = ({ classes, handlerSignupLink, handlerNavigation }) => {
     );
 };
 
-LoginForm.propTypes = {
+Login.propTypes = {
     classes: PropTypes.object.isRequired,
     handlerSignupLink: PropTypes.func.isRequired,
     handlerNavigation: PropTypes.func.isRequired,

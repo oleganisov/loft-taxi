@@ -34,7 +34,7 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit}>
+            <form onSubmit={handlerSubmit} id="login_form">
                 <Grid container direction="column">
                     <Typography
                         component="h1"

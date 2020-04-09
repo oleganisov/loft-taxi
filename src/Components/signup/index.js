@@ -12,7 +12,7 @@ const styles = () => ({
     },
 });
 
-const Signup = ({ classes, handlerSignup, handlerLoginLink }) => {
+const Signup = ({ classes, handlerLoginLink, handlerNavigation }) => {
     return (
         <Background>
             <Grid
@@ -27,10 +27,9 @@ const Signup = ({ classes, handlerSignup, handlerLoginLink }) => {
                     animated={true}
                     classes={{ logo: classes.logo }}
                 />
-
                 <SignupForm
-                    handlerSignup={handlerSignup}
                     handlerLoginLink={handlerLoginLink}
+                    handlerNavigation={handlerNavigation}
                 />
             </Grid>
         </Background>
@@ -39,8 +38,8 @@ const Signup = ({ classes, handlerSignup, handlerLoginLink }) => {
 
 Signup.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerSignup: PropTypes.func.isRequired,
     handlerLoginLink: PropTypes.func.isRequired,
+    handlerNavigation: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Signup);
