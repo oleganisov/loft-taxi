@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Background from '../common/Background';
@@ -30,6 +31,10 @@ const Profile = ({ classes }) => {
             </Grid>
         </Background>
     );
+};
+
+Profile.propTypes = {
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Profile);

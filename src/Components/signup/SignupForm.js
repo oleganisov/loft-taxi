@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     Grid,
     FormControl,
@@ -108,6 +109,11 @@ const SignupForm = ({ classes, handlerSignup, handlerLoginLink }) => {
             </form>
         </Paper>
     );
+};
+SignupForm.propTypes = {
+    classes: PropTypes.object.isRequired,
+    handlerSignup: PropTypes.func.isRequired,
+    handlerLoginLink: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);

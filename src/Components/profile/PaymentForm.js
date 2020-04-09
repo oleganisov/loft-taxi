@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Card, TextField, Typography, Paper } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
 import { withStyles } from '@material-ui/core/styles';
@@ -80,6 +81,10 @@ const PaymentForm = ({ classes }) => {
             </form>
         </Paper>
     );
+};
+
+PaymentForm.propTypes = {
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(PaymentForm);

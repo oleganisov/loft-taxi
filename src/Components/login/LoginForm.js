@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import {
     Grid,
     FormControl,
@@ -92,6 +93,12 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
             </form>
         </Paper>
     );
+};
+
+LoginForm.propTypes = {
+    classes: PropTypes.object.isRequired,
+    handlerSignupLink: PropTypes.func.isRequired,
+    handlerNavigation: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(LoginForm);

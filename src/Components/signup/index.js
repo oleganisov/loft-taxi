@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Logo } from 'loft-taxi-mui-theme';
@@ -34,6 +35,12 @@ const Signup = ({ classes, handlerSignup, handlerLoginLink }) => {
             </Grid>
         </Background>
     );
+};
+
+Signup.propTypes = {
+    classes: PropTypes.object.isRequired,
+    handlerSignup: PropTypes.func.isRequired,
+    handlerLoginLink: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Signup);

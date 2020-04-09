@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Container } from '@material-ui/core';
 import { AuthContext } from '../authContext';
 import { Logo } from 'loft-taxi-mui-theme';
@@ -29,6 +30,9 @@ const Header = ({ classes }) => {
             </Toolbar>
         </AppBar>
     );
+};
+Header.propTypes = {
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Header);
