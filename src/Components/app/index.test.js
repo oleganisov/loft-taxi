@@ -2,8 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './index.js';
 
-test('renders learn react link', () => {
-    const { getByText } = render(<App />);
-    const linkElement = getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument();
+jest.mock('../map', () => () => <div>Карта</div>);
+
+describe('App', () => {
+    it('print', () => {
+        const { debug } = render(<App />);
+        // Pretty print the DOM tree of your render
+        debug();
+    });
 });

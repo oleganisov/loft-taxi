@@ -85,6 +85,7 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
                             color="primary"
                             elevation={0}
                             type="submit"
+                            data-testid="login_submit"
                         >
                             Войти
                         </Button>
