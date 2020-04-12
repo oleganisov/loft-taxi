@@ -14,7 +14,7 @@ const styles = () => ({
     },
 });
 
-const Header = ({ classes, handlerNavigation }) => {
+const Header = ({ classes, handlerPage }) => {
     const authContext = useContext(AuthContext);
     const handlerLogout = authContext.logout;
 
@@ -24,10 +24,8 @@ const Header = ({ classes, handlerNavigation }) => {
                 <Container className={classes.logo}>
                     <Logo />
                 </Container>
-                <Button onClick={() => handlerNavigation('map')}>Карта</Button>
-                <Button onClick={() => handlerNavigation('profile')}>
-                    Профиль
-                </Button>
+                <Button onClick={() => handlerPage('map')}>Карта</Button>
+                <Button onClick={() => handlerPage('profile')}>Профиль</Button>
                 <Button onClick={handlerLogout}>Выйти</Button>
             </Toolbar>
         </AppBar>
@@ -35,7 +33,7 @@ const Header = ({ classes, handlerNavigation }) => {
 };
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerNavigation: PropTypes.func.isRequired,
+    handlerPage: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);

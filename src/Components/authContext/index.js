@@ -8,18 +8,10 @@ const AuthProvider = ({ children }) => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const handlerLogin = (e) => {
-        const formId = e.target.id;
-
+    const handlerLogin = (username, password) => {
+        setUsername(username);
+        setPassword(password);
         setLoggedIn(true);
-
-        if (formId === 'login_form') {
-            setUsername(e.target.username.value);
-            setPassword(e.target.password.value);
-        } else {
-            setUsername(null);
-            setPassword(null);
-        }
     };
     const handlerLogout = () => {
         setUsername(null);

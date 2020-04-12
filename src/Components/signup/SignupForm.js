@@ -22,18 +22,23 @@ const styles = () => ({
         marginRight: '10px',
     },
 });
-const SignupForm = ({ classes, handlerLoginLink, handlerNavigation }) => {
+const SignupForm = ({ classes, handlerPage }) => {
     const authContext = useContext(AuthContext);
     const handlerLogin = authContext.login;
 
+    const handlerLoginLink = (e) => {
+        e.preventDefault();
+        handlerPage('login');
+    };
     const handlerSubmit = (e) => {
         e.preventDefault();
-        handlerLogin(e);
-        handlerNavigation('map');
+        // handlerLogin воткнул временно
+        handlerLogin();
+        handlerPage('map');
     };
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit} id="signup_form">
+            <form onSubmit={handlerSubmit} id="signup-form">
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -110,6 +115,7 @@ const SignupForm = ({ classes, handlerLoginLink, handlerNavigation }) => {
                             color="primary"
                             elevation={0}
                             type="submit"
+                            data-testid="signup_submit"
                         >
                             Зарегистрироваться
                         </Button>
@@ -121,8 +127,7 @@ const SignupForm = ({ classes, handlerLoginLink, handlerNavigation }) => {
 };
 SignupForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerLoginLink: PropTypes.func.isRequired,
-    handlerNavigation: PropTypes.func.isRequired,
+    handlerPage: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);

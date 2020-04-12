@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Header from '../common/Header';
 
 const styles = {
     width: '100vw',
@@ -9,7 +8,7 @@ const styles = {
     position: 'absolute',
 };
 
-const Map = ({ handlerNavigation }) => {
+const Map = () => {
     const mapContainerRef = useRef(null);
 
     useEffect(() => {
@@ -30,12 +29,7 @@ const Map = ({ handlerNavigation }) => {
         return () => map.remove();
     }, []);
 
-    return (
-        <>
-            <Header handlerNavigation={handlerNavigation} />
-            <div ref={mapContainerRef} style={styles} />
-        </>
-    );
+    return <div ref={mapContainerRef} style={styles} />;
 };
 
 export default Map;

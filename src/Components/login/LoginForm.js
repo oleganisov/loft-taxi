@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -22,19 +22,34 @@ const styles = () => ({
     },
 });
 
-const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
+const LoginForm = ({ classes, handlerPage }) => {
     const authContext = useContext(AuthContext);
     const handlerLogin = authContext.login;
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handlerSubmit = (e) => {
+    const handlerSignupLink = (e) => {
         e.preventDefault();
-        handlerLogin(e);
-        handlerNavigation('map');
+        handlerPage('signup');
+    };
+    const handlerSubmit = (e) => {
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+
+        e.preventDefault();
+        handlerLogin(username, password);
+        handlerPage('map');
+    };
+    const handlerChangeUsername = (e) => {
+        setUsername(e.target.value);
+    };
+    const handlerChangePassword = (e) => {
+        setPassword(e.target.value);
     };
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit} id="login_form">
+            <form onSubmit={handlerSubmit} id="login-form">
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -66,6 +81,8 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
                             type="text"
                             placeholder="Имя пользователя"
                             required
+                            onChange={handlerChangeUsername}
+                            value={username}
                         />
                     </FormControl>
                     <FormControl required>
@@ -77,6 +94,8 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
                             type="password"
                             placeholder="Пароль"
                             required
+                            onChange={handlerChangePassword}
+                            value={password}
                         />
                     </FormControl>
                     <Grid align="right">
@@ -85,7 +104,7 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
                             color="primary"
                             elevation={0}
                             type="submit"
-                            data-testid="login_submit"
+                            data-testid="login-submit"
                         >
                             Войти
                         </Button>
@@ -98,8 +117,7 @@ const LoginForm = ({ classes, handlerSignupLink, handlerNavigation }) => {
 
 LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerSignupLink: PropTypes.func.isRequired,
-    handlerNavigation: PropTypes.func.isRequired,
+    handlerPage: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(LoginForm);
