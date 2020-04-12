@@ -1,21 +1,18 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SignupForm from './SignupForm';
-
-const handlerLoginLinkMock = jest.fn();
-const handlerPageMock = jest.fn();
+import { AuthProvider } from '../authContext';
 
 describe('SignupForm', () => {
-    let getByText, getByLabelText, getByTestId;
+    const handlerPageMock = jest.fn();
+    let getByText, getByTestId;
     beforeEach(() => {
         const queries = render(
-            <SignupForm
-                handlerLoginLink={handlerLoginLinkMock}
-                handlerPage={handlerPageMock}
-            />
+            <AuthProvider>
+                <SignupForm handlerPage={handlerPageMock} />
+            </AuthProvider>
         );
         getByText = queries.getByText;
-        getByLabelText = queries.getByLabelText;
         getByTestId = queries.getByTestId;
     });
 
@@ -24,29 +21,15 @@ describe('SignupForm', () => {
 
         expect(linkElement).toBeInTheDocument();
     });
-    it('get input email', () => {
-        const inputElement = getByText(/Адрес электронной почты/i);
 
-        expect(inputElement).toBeInTheDocument();
+    it('email input changes', () => {
+        const inputEmail = getByTestId('email');
+
+        fireEvent.change(inputEmail, { target: { value: 'user1@domain.com' } });
+        expect(inputEmail.value).toBe('user1@domain.com');
     });
-    it('get input firstname', () => {
-        const inputElement = getByLabelText(/имя/i);
-
-        expect(inputElement).toBeInTheDocument();
-    });
-    it('get input lastname', () => {
-        const inputElement = getByLabelText(/фамилия/i);
-
-        expect(inputElement).toBeInTheDocument();
-    });
-    it('get input password', () => {
-        const inputElement = getByLabelText(/пароль/i);
-
-        expect(inputElement).toBeInTheDocument();
-    });
-    it('get button submit', () => {
-        const buttonElement = getByTestId('signup_submit');
-
-        expect(buttonElement).toBeInTheDocument();
+    it('click submit', () => {
+        fireEvent.click(getByTestId('signup-submit'));
+        expect(handlerPageMock).toHaveBeenCalled();
     });
 });

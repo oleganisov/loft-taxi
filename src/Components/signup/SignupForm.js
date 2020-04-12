@@ -36,6 +36,7 @@ const SignupForm = ({ classes, handlerPage }) => {
         handlerLogin();
         handlerPage('map');
     };
+
     return (
         <Paper className={classes.paper}>
             <form onSubmit={handlerSubmit} id="signup-form">
@@ -70,6 +71,7 @@ const SignupForm = ({ classes, handlerPage }) => {
                             type="email"
                             placeholder="Адрес электронной почты"
                             required
+                            inputProps={{ 'data-testid': 'email' }}
                         />
                     </FormControl>
                     <Grid>
@@ -115,7 +117,7 @@ const SignupForm = ({ classes, handlerPage }) => {
                             color="primary"
                             elevation={0}
                             type="submit"
-                            data-testid="signup_submit"
+                            data-testid="signup-submit"
                         >
                             Зарегистрироваться
                         </Button>

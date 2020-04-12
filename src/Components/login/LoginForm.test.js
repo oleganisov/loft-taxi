@@ -3,24 +3,19 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import LoginForm from './LoginForm';
 import { AuthProvider } from '../authContext';
 
-const handlerSignupLinkMock = jest.fn();
-const handlerPageMock = jest.fn();
-
 describe('LoginForm', () => {
-    let getByText, getByLabelText, getByTestId, debug;
+    const handlerPageMock = jest.fn();
+    let getByText, getByLabelText, getByTestId;
     beforeEach(() => {
         const queries = render(
             <AuthProvider>
-                <LoginForm
-                    handlerSignupLink={handlerSignupLinkMock}
-                    handlerPage={handlerPageMock}
-                />
+                <LoginForm handlerPage={handlerPageMock} />
             </AuthProvider>
         );
+
         getByText = queries.getByText;
         getByLabelText = queries.getByLabelText;
         getByTestId = queries.getByTestId;
-        debug = queries.debug;
     });
     afterEach(() => {
         cleanup();
@@ -31,40 +26,19 @@ describe('LoginForm', () => {
 
         expect(linkElement).toBeInTheDocument();
     });
-    it('get input login', () => {
-        const inputElement = getByLabelText(/имя пользователя/i);
+    it('Username input changes', () => {
+        const inputUserName = getByLabelText(/имя пользователя/i);
 
-        expect(inputElement).toBeInTheDocument();
+        fireEvent.change(inputUserName, { target: { value: 'user1' } });
+        expect(inputUserName.value).toBe('user1');
     });
+    it('click submit', () => {
+        const inputUserName = getByLabelText(/имя пользователя/i);
+        const inputPassword = getByLabelText(/пароль/i);
 
-    it('get input password', () => {
-        const inputElement = getByLabelText(/пароль/i);
-
-        expect(inputElement).toBeInTheDocument();
+        fireEvent.change(inputUserName, { target: { value: 'user1' } });
+        fireEvent.change(inputPassword, { target: { value: 'pwd' } });
+        fireEvent.click(getByTestId('login-submit'));
+        expect(handlerPageMock).toHaveBeenCalled();
     });
-
-    it('get button submit', () => {
-        const buttonElement = getByTestId('login-submit');
-
-        expect(buttonElement).toBeInTheDocument();
-    });
-    // it('click submit', () => {
-    //     const buttonSubmit = getByTestId('login-submit');
-    //     const inputUserName = getByLabelText(/имя пользователя/i);
-    //     const inputPassword = getByLabelText(/пароль/i);
-    //     const onClick = jest.fn();
-
-    //     fireEvent.change(inputUserName, { target: { value: 'user1' } });
-    //     fireEvent.change(inputPassword, { target: { value: 'pwd' } });
-
-    //     inputUserName.value = 'user1';
-    //     inputPassword.value = 'pwd';
-    //     fireEvent.change(inputUserName);
-    //     fireEvent.change(inputPassword);
-    //     debug();
-
-    //     expect(inputPassword.value).toBe('pwd');
-    //     fireEvent.click(buttonSubmit);
-    //     expect(onClick).toHaveBeenCalled();
-    // });
 });

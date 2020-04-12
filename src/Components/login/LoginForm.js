@@ -33,11 +33,14 @@ const LoginForm = ({ classes, handlerPage }) => {
         handlerPage('signup');
     };
     const handlerSubmit = (e) => {
-        const username = e.target.username.value;
-        const password = e.target.password.value;
-
         e.preventDefault();
-        handlerLogin(username, password);
+
+        if (e.target.username && e.target.password) {
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+
+            handlerLogin(username, password);
+        }
         handlerPage('map');
     };
     const handlerChangeUsername = (e) => {
