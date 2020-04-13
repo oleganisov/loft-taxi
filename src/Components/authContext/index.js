@@ -23,8 +23,6 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 isLoggedIn,
-                username,
-                password,
                 login: handlerLogin,
                 logout: handlerLogout,
             }}
