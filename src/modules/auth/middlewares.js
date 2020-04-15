@@ -8,6 +8,8 @@ import {
 } from './actions';
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
+    const { email } = action.payload;
+
     if (action.type === loginUserRequest.toString()) {
         fetch('https://loft-taxi.glitch.me/auth', {
             method: 'POST',
@@ -18,10 +20,10 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
         })
             .then((response) => response.json())
             .then((json) => {
-                const { success, token } = json;
+                const { success, token, error } = json;
                 success
-                    ? store.dispatch(loginUserSuccess(token))
-                    : store.dispatch(loginUserFailure(token));
+                    ? store.dispatch(loginUserSuccess({ token, email }))
+                    : store.dispatch(loginUserFailure(error));
             })
             .catch((error) => {
                 store.dispatch(loginUserFailure(error));
@@ -36,10 +38,10 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
         })
             .then((response) => response.json())
             .then((json) => {
-                const { success, token } = json;
+                const { success, token, error } = json;
                 success
-                    ? store.dispatch(registerUserSuccess(token))
-                    : store.dispatch(registerUserFailure(token));
+                    ? store.dispatch(registerUserSuccess({ token, email }))
+                    : store.dispatch(registerUserFailure(error));
             })
             .catch((error) => {
                 store.dispatch(registerUserFailure(error));

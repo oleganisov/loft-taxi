@@ -33,10 +33,22 @@ const error = handleActions(
 const token = handleActions(
     {
         [loginUserRequest]: () => null,
-        [loginUserSuccess]: (_state, action) => action.payload,
+        [loginUserSuccess]: (_state, action) => action.payload.token,
         [loginUserFailure]: () => null,
         [registerUserRequest]: () => null,
-        [registerUserSuccess]: (_state, action) => action.payload,
+        [registerUserSuccess]: (_state, action) => action.payload.token,
+        [registerUserFailure]: () => null,
+        [logoutUser]: () => null,
+    },
+    null
+);
+const email = handleActions(
+    {
+        [loginUserRequest]: () => null,
+        [loginUserSuccess]: (_state, action) => action.payload.email,
+        [loginUserFailure]: () => null,
+        [registerUserRequest]: () => null,
+        [registerUserSuccess]: (_state, action) => action.payload.email,
         [registerUserFailure]: () => null,
         [logoutUser]: () => null,
     },
@@ -47,6 +59,7 @@ export default combineReducers({
     isLoggedIn,
     error,
     token,
+    email,
 });
 
 // const initialState = {
