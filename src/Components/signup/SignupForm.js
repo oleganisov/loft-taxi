@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -11,7 +11,9 @@ import {
     Paper,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AuthContext } from '../authContext';
+import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUserRequest } from '../../modules/auth';
 
 const styles = () => ({
     paper: {
@@ -22,19 +24,15 @@ const styles = () => ({
         marginRight: '10px',
     },
 });
-const SignupForm = ({ classes, handlerPage }) => {
-    const authContext = useContext(AuthContext);
-    const handlerLogin = authContext.login;
-
-    const handlerLoginLink = (e) => {
-        e.preventDefault();
-        handlerPage('login');
-    };
+const SignupForm = ({ classes, registerUserRequest }) => {
     const handlerSubmit = (e) => {
         e.preventDefault();
-        // handlerLogin воткнул временно
-        handlerLogin();
-        handlerPage('map');
+        const email = e.target.email.value;
+        const password = e.target.signup_password.value;
+        const name = e.target.firstname.value;
+        const surname = e.target.lastname.value;
+
+        registerUserRequest({ email, password, name, surname });
     };
 
     return (
@@ -55,7 +53,8 @@ const SignupForm = ({ classes, handlerPage }) => {
                             align="left"
                             underline="none"
                             href="/login"
-                            onClick={handlerLoginLink}
+                            component={RouterLink}
+                            to="/login"
                         >
                             Войти
                         </Link>
@@ -129,7 +128,10 @@ const SignupForm = ({ classes, handlerPage }) => {
 };
 SignupForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerPage: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SignupForm);
+const mapDispatchToProps = {
+    registerUserRequest,
+};
+
+export default connect(null,mapDispatchToProps)(withStyles(styles)(SignupForm));

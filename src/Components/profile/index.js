@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Background from '../common/Background';
 import PaymentForm from './PaymentForm';
+import Header from '../common/Header';
 
 const styles = () => ({
     root: { paddingTop: '50px' },
@@ -12,6 +13,7 @@ const styles = () => ({
 const Profile = ({ classes }) => {
     return (
         <Background>
+            <Header />
             <Grid
                 className={classes.root}
                 container

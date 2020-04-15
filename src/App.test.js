@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from '@testing-library/react';
-import App from './index.js';
+import App from './App.js';
 
-jest.mock('../map', () => () => <div>Карта</div>);
+jest.mock('./components/map', () => () => <div>Карта</div>);
 
 describe('App', () => {
     it('reneders without crashing', () => {

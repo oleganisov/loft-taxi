@@ -5,6 +5,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Logo } from 'loft-taxi-mui-theme';
 import Background from '../common/Background';
 import SignupForm from './SignupForm';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { getIsLoggedIn } from '../../modules/auth';
 
 const styles = () => ({
     logo: {
@@ -12,7 +15,8 @@ const styles = () => ({
     },
 });
 
-const Signup = ({ classes, handlerPage }) => {
+const Signup = ({ classes, isLoggedIn }) => {
+    if (isLoggedIn) return <Redirect to="/map" />;
     return (
         <Background>
             <Grid
@@ -27,7 +31,7 @@ const Signup = ({ classes, handlerPage }) => {
                     animated={true}
                     classes={{ logo: classes.logo }}
                 />
-                <SignupForm handlerPage={handlerPage} />
+                <SignupForm />
             </Grid>
         </Background>
     );
@@ -35,7 +39,9 @@ const Signup = ({ classes, handlerPage }) => {
 
 Signup.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerPage: PropTypes.func.isRequired,
 };
+const mapStateToProps = (state) => ({
+    isLoggedIn: getIsLoggedIn(state),
+});
 
-export default withStyles(styles)(Signup);
+export default connect(mapStateToProps)(withStyles(styles)(Signup));
