@@ -1,8 +1,8 @@
 import React from 'react';
-import Map from './components/map';
-import Profile from './components/profile';
-import Login from './components/login';
-import Signup from './components/signup';
+import Map from './Components/map';
+import Profile from './Components/profile';
+import Login from './Components/login';
+import Signup from './Components/signup';
 import PrivateRoute from './PrivateRoute';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,15 +11,15 @@ import { getIsLoggedIn } from './modules/auth';
 const App = ({ isLoggedIn }) => {
     return (
         <Switch>
+            <Route path="/" component={Login} exact />
+            <Route path="/signup" component={Signup} />
             <PrivateRoute path="/map" component={Map} isLoggedIn={isLoggedIn} />
             <PrivateRoute
                 path="/profile"
                 component={Profile}
                 isLoggedIn={isLoggedIn}
             />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Redirect to="/map" />
+            <Redirect to="/" />
         </Switch>
     );
 };

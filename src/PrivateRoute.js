@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: RouteComponent, isLoggedIn, ...props }) => {
                 isLoggedIn ? (
                     <RouteComponent {...routeProps} />
                 ) : (
-                    <Redirect to="/signup" />
+                    <Redirect to="/" />
                 )
             }
         />

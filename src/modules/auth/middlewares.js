@@ -9,7 +9,6 @@ import {
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
     if (action.type === loginUserRequest.toString()) {
-        console.log(JSON.stringify(action.payload));
         fetch('https://loft-taxi.glitch.me/auth', {
             method: 'POST',
             body: JSON.stringify(action.payload),
@@ -19,7 +18,6 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
                 const { success, token } = json;
                 success
                     ? store.dispatch(loginUserSuccess(token))
@@ -29,7 +27,6 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
                 store.dispatch(loginUserFailure(error));
             });
     } else if (action.type === registerUserRequest.toString()) {
-        console.log(JSON.stringify(action.payload));
         fetch('https://loft-taxi.glitch.me/register', {
             method: 'POST',
             body: JSON.stringify(action.payload),
@@ -39,7 +36,6 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
                 const { success, token } = json;
                 success
                     ? store.dispatch(registerUserSuccess(token))

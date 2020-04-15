@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { render } from '@testing-library/react';
 import App from './App.js';
 
-jest.mock('./components/map', () => () => <div>Карта</div>);
+jest.mock('./Components/map', () => () => <div>Карта</div>);
 
 describe('App', () => {
     it('reneders without crashing', () => {
