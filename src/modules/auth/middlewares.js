@@ -8,8 +8,6 @@ import {
 } from './actions';
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
-    const { email } = action.payload;
-
     if (action.type === loginUserRequest.toString()) {
         fetch('https://loft-taxi.glitch.me/auth', {
             method: 'POST',
@@ -21,9 +19,16 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
             .then((response) => response.json())
             .then((json) => {
                 const { success, token, error } = json;
-                success
-                    ? store.dispatch(loginUserSuccess({ token, email }))
-                    : store.dispatch(loginUserFailure(error));
+                const email = action.payload.email;
+
+                if (success) {
+                    store.dispatch(loginUserSuccess({ token, email }));
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('isLoggedIn', 'true');
+                } else {
+                    store.dispatch(loginUserFailure(error));
+                }
             })
             .catch((error) => {
                 store.dispatch(loginUserFailure(error));
@@ -39,9 +44,16 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
             .then((response) => response.json())
             .then((json) => {
                 const { success, token, error } = json;
-                success
-                    ? store.dispatch(registerUserSuccess({ token, email }))
-                    : store.dispatch(registerUserFailure(error));
+                const email = action.payload.email;
+
+                if (success) {
+                    store.dispatch(registerUserSuccess({ token, email }));
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('isLoggedIn', 'true');
+                } else {
+                    store.dispatch(registerUserFailure(error));
+                }
             })
             .catch((error) => {
                 store.dispatch(registerUserFailure(error));

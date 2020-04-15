@@ -17,6 +17,13 @@ const styles = () => ({
 });
 
 const Header = ({ classes, logoutUser }) => {
+    const handleLogoutUser = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+        localStorage.removeItem('isLoggedIn');
+        logoutUser();
+    };
+
     return (
         <AppBar position="static" className={classes.appBar}>
             <Toolbar>
@@ -29,7 +36,7 @@ const Header = ({ classes, logoutUser }) => {
                 <Button component={RouterLink} to="/profile">
                     Профиль
                 </Button>
-                <Button onClick={logoutUser}>Выйти</Button>
+                <Button onClick={handleLogoutUser}>Выйти</Button>
             </Toolbar>
         </AppBar>
     );
