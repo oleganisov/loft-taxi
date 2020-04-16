@@ -12,9 +12,16 @@ export const cardFetchMiddleware = (store) => (next) => (action) => {
             .then((response) => response.json())
             .then((json) => {
                 const { success, error } = json;
-                console.log(action.payload, json);
+                const {
+                    cardNumber,
+                    expiryDate,
+                    cardName,
+                    cvc,
+                } = action.payload;
                 success
-                    ? store.dispatch(cardSuccess())
+                    ? store.dispatch(
+                          cardSuccess({ cardNumber, expiryDate, cardName, cvc })
+                      )
                     : store.dispatch(cardFailure(error));
             })
             .catch((error) => {

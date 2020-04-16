@@ -37,7 +37,7 @@ const styles = () => ({
     },
 });
 
-const NumberFormatCustom = (props) => {
+const CardNumberFormat = (props) => {
     const { inputRef, onChange, ...rest } = props;
     return (
         <NumberFormat
@@ -51,6 +51,25 @@ const NumberFormatCustom = (props) => {
                 });
             }}
             format="#### #### #### ####"
+            mask="_"
+        />
+    );
+};
+const CardCVCFormat = (props) => {
+    const { inputRef, onChange, ...rest } = props;
+    return (
+        <NumberFormat
+            {...rest}
+            onValueChange={(values) => {
+                onChange({
+                    target: {
+                        name: props.name,
+                        value: values.value,
+                    },
+                });
+            }}
+            format="###"
+            mask="_"
         />
     );
 };
@@ -64,7 +83,6 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
         const cardName = e.target.card_owner.value;
         const cvc = e.target.card_cvc.value;
 
-        console.log(e.target.card_owner.value);
         cardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
     return (
@@ -88,7 +106,7 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
                                 required
                                 margin="normal"
                                 InputProps={{
-                                    inputComponent: NumberFormatCustom,
+                                    inputComponent: CardNumberFormat,
                                 }}
                             />
                             <DatePicker
@@ -123,6 +141,9 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
                                 required
                                 margin="normal"
                                 type="password"
+                                InputProps={{
+                                    inputComponent: CardCVCFormat,
+                                }}
                             />
                         </Card>
                     </Grid>
