@@ -46,7 +46,11 @@ const LoginForm = ({ classes, loginUserRequest }) => {
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit} id="login-form">
+            <form
+                onSubmit={handlerSubmit}
+                id="login-form"
+                data-testid="login-form"
+            >
                 <Grid container direction="column">
                     <Typography
                         component="h1"

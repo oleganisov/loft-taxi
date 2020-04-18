@@ -1,16 +1,22 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import SignupForm from './SignupForm';
-import { AuthProvider } from '../authContext';
+import createStore from '../../store';
+import { BrowserRouter } from 'react-router-dom';
+
+const store = createStore();
 
 describe('SignupForm', () => {
-    const handlerPageMock = jest.fn();
+    const registerUserRequestMock = jest.fn();
     let getByText, getByTestId;
     beforeEach(() => {
         const queries = render(
-            <AuthProvider>
-                <SignupForm handlerPage={handlerPageMock} />
-            </AuthProvider>
+            <BrowserRouter>
+                <SignupForm
+                    registerUserRequest={registerUserRequestMock}
+                    store={store}
+                />
+            </BrowserRouter>
         );
         getByText = queries.getByText;
         getByTestId = queries.getByTestId;
@@ -30,6 +36,7 @@ describe('SignupForm', () => {
     });
     it('click submit', () => {
         fireEvent.click(getByTestId('signup-submit'));
-        expect(handlerPageMock).toHaveBeenCalled();
+
+        expect(registerUserRequestMock).toHaveBeenCalled();
     });
 });

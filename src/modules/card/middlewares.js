@@ -1,7 +1,14 @@
-import { cardRequest, cardSuccess, cardFailure } from './actions';
+import {
+    saveCardRequest,
+    saveCardSuccess,
+    saveCardFailure,
+    fetchCardRequest,
+    fetchCardSuccess,
+    fetchCardFailure,
+} from './actions';
 
 export const cardFetchMiddleware = (store) => (next) => (action) => {
-    if (action.type === cardRequest.toString()) {
+    if (action.type === saveCardRequest.toString()) {
         fetch('https://loft-taxi.glitch.me/card', {
             method: 'POST',
             body: JSON.stringify(action.payload),
@@ -20,13 +27,30 @@ export const cardFetchMiddleware = (store) => (next) => (action) => {
                 } = action.payload;
                 success
                     ? store.dispatch(
-                          cardSuccess({ cardNumber, expiryDate, cardName, cvc })
+                          saveCardSuccess({
+                              cardNumber,
+                              expiryDate,
+                              cardName,
+                              cvc,
+                          })
                       )
-                    : store.dispatch(cardFailure(error));
+                    : store.dispatch(saveCardFailure(error));
             })
             .catch((error) => {
-                store.dispatch(cardFailure(error));
+                store.dispatch(saveCardFailure(error));
             });
     }
+    if (action.type === fetchCardRequest.toString()) {
+        const token = action.payload.token;
+        fetch(`https://loft-taxi.glitch.me/card?token=${token}`)
+            .then((response) => response.json())
+            .then((json) => {
+                store.dispatch(fetchCardSuccess(json));
+            })
+            .catch((error) => {
+                store.dispatch(fetchCardFailure(error));
+            });
+    }
+
     return next(action);
 };

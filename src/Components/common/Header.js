@@ -33,7 +33,11 @@ const Header = ({ classes, logoutUser }) => {
                 <Button component={RouterLink} to="/map">
                     Карта
                 </Button>
-                <Button component={RouterLink} to="/profile">
+                <Button
+                    component={RouterLink}
+                    to="/profile"
+                    data-testid="link-profile"
+                >
                     Профиль
                 </Button>
                 <Button onClick={handleLogoutUser}>Выйти</Button>

@@ -33,7 +33,8 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
             .catch((error) => {
                 store.dispatch(loginUserFailure(error));
             });
-    } else if (action.type === registerUserRequest.toString()) {
+    }
+    if (action.type === registerUserRequest.toString()) {
         fetch('https://loft-taxi.glitch.me/register', {
             method: 'POST',
             body: JSON.stringify(action.payload),

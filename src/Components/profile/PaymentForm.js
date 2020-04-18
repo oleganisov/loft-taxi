@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import {
@@ -13,7 +13,14 @@ import { DatePicker } from '@material-ui/pickers';
 import { withStyles } from '@material-ui/core/styles';
 import { MCIcon } from 'loft-taxi-mui-theme';
 import { connect } from 'react-redux';
-import { cardRequest } from '../../modules/card';
+import {
+    saveCardRequest,
+    fetchCardRequest,
+    getCardNumber,
+    getCardCVC,
+    getCardExpDate,
+    getCardName,
+} from '../../modules/card';
 import { getToken } from '../../modules/auth';
 
 const styles = () => ({
@@ -74,8 +81,22 @@ const CardCVCFormat = (props) => {
     );
 };
 
-const PaymentForm = ({ classes, cardRequest, token }) => {
-    const [selectedDate, handleDateChange] = useState(new Date());
+const PaymentForm = ({
+    classes,
+    saveCardRequest,
+    token,
+    fetchCardRequest,
+    cardNumber,
+    cardName,
+    expDate,
+    cvc,
+}) => {
+    const [inputNumber, setInputNumber] = useState(undefined);
+    const [inputName, setInputName] = useState(undefined);
+    const [inputDate, setInputDate] = useState(undefined);
+    const [inputCVC, setInputCVC] = useState(undefined);
+    console.log(cardNumber, cardName, expDate, cvc);
+
     const handlerSubmit = (e) => {
         e.preventDefault();
         const cardNumber = e.target.card_number.value;
@@ -83,8 +104,12 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
         const cardName = e.target.card_owner.value;
         const cvc = e.target.card_cvc.value;
 
-        cardRequest({ cardNumber, expiryDate, cardName, cvc, token });
+        saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
+    useEffect(() => {
+        fetchCardRequest(token);
+    }, [fetchCardRequest, token]);
+
     return (
         <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center" gutterBottom>
@@ -93,7 +118,7 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
             <Typography align="center" className={classes.subtitle}>
                 Способ оплаты
             </Typography>
-            <form onSubmit={handlerSubmit}>
+            <form onSubmit={handlerSubmit} data-testid="payment-form">
                 <Grid container justify="center" spacing={4}>
                     <Grid item>
                         <Card className={classes.card} elevation={3}>
@@ -118,8 +143,8 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
                                 clearable
                                 format="MM/YY"
                                 views={['year', 'month']}
-                                value={selectedDate}
-                                onChange={handleDateChange}
+                                value={inputDate}
+                                onChange={setInputDate}
                             />
                         </Card>
                     </Grid>
@@ -132,6 +157,8 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
                                 placeholder="Имя владельца"
                                 required
                                 margin="normal"
+                                value={inputName}
+                                onChange={setInputName}
                             />
                             <TextField
                                 id="card_cvc"
@@ -141,6 +168,8 @@ const PaymentForm = ({ classes, cardRequest, token }) => {
                                 required
                                 margin="normal"
                                 type="password"
+                                value={inputCVC}
+                                onChange={setInputCVC}
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}
@@ -171,9 +200,14 @@ PaymentForm.propTypes = {
 
 const mapStateToProps = (state) => ({
     token: getToken(state),
+    cardNumber: getCardNumber(state),
+    cvc: getCardCVC(state),
+    cardName: getCardName(state),
+    expDate: getCardExpDate(state),
 });
 const mapDispatchToProps = {
-    cardRequest,
+    saveCardRequest,
+    fetchCardRequest,
 };
 
 export default connect(

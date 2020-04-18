@@ -33,7 +33,7 @@ const Map = () => {
     return (
         <>
             <Header />
-            <div ref={mapContainerRef} style={styles} />
+            <div data-testid="page-map" ref={mapContainerRef} style={styles} />
         </>
     );
 };
