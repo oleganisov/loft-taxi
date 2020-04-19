@@ -91,11 +91,10 @@ const PaymentForm = ({
     expDate,
     cvc,
 }) => {
-    const [inputNumber, setInputNumber] = useState(undefined);
-    const [inputName, setInputName] = useState(undefined);
-    const [inputDate, setInputDate] = useState(undefined);
-    const [inputCVC, setInputCVC] = useState(undefined);
-    console.log(cardNumber, cardName, expDate, cvc);
+    const [inputNumber, setInputNumber] = useState();
+    const [inputName, setInputName] = useState('');
+    const [inputDate, setInputDate] = useState(new Date());
+    const [inputCVC, setInputCVC] = useState();
 
     const handlerSubmit = (e) => {
         e.preventDefault();
@@ -107,8 +106,8 @@ const PaymentForm = ({
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
     useEffect(() => {
-        fetchCardRequest(token);
-    }, [fetchCardRequest, token]);
+        fetchCardRequest();
+    }, [fetchCardRequest]);
 
     return (
         <Paper className={classes.paper}>
@@ -130,6 +129,8 @@ const PaymentForm = ({
                                 placeholder="0000 0000 0000 0000"
                                 required
                                 margin="normal"
+                                value={inputNumber}
+                                onChange={(e) => setInputNumber(e.target.value)}
                                 InputProps={{
                                     inputComponent: CardNumberFormat,
                                 }}
@@ -158,7 +159,7 @@ const PaymentForm = ({
                                 required
                                 margin="normal"
                                 value={inputName}
-                                onChange={setInputName}
+                                onChange={(e) => setInputName(e.target.value)}
                             />
                             <TextField
                                 id="card_cvc"
@@ -169,7 +170,7 @@ const PaymentForm = ({
                                 margin="normal"
                                 type="password"
                                 value={inputCVC}
-                                onChange={setInputCVC}
+                                onChange={(e) => setInputCVC(e.target.value)}
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}

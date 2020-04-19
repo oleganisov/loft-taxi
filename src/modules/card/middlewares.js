@@ -25,6 +25,7 @@ export const cardFetchMiddleware = (store) => (next) => (action) => {
                     cardName,
                     cvc,
                 } = action.payload;
+
                 success
                     ? store.dispatch(
                           saveCardSuccess({
@@ -41,7 +42,8 @@ export const cardFetchMiddleware = (store) => (next) => (action) => {
             });
     }
     if (action.type === fetchCardRequest.toString()) {
-        const token = action.payload.token;
+        const token = localStorage.getItem('token');
+
         fetch(`https://loft-taxi.glitch.me/card?token=${token}`)
             .then((response) => response.json())
             .then((json) => {

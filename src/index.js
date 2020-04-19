@@ -14,17 +14,17 @@ import createStore from './store';
 const store = createStore();
 
 ReactDOM.render(
-    <React.StrictMode>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-            <MuiThemeProvider theme={theme}>
-                <BrowserRouter>
-                    <Provider store={store}>
-                        <App />
-                    </Provider>
-                </BrowserRouter>
-            </MuiThemeProvider>
-        </MuiPickersUtilsProvider>
-    </React.StrictMode>,
+    // <React.StrictMode>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+        <MuiThemeProvider theme={theme}>
+            <BrowserRouter>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </BrowserRouter>
+        </MuiThemeProvider>
+    </MuiPickersUtilsProvider>,
+    // </React.StrictMode>,
     document.getElementById('root')
 );
 
