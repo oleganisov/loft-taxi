@@ -8,8 +8,10 @@ import {
 } from './actions';
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
+    const BASE_URL = 'https://loft-taxi.glitch.me/';
+
     if (action.type === loginUserRequest.toString()) {
-        fetch('https://loft-taxi.glitch.me/auth', {
+        fetch(`${BASE_URL}/auth`, {
             method: 'POST',
             body: JSON.stringify(action.payload),
             headers: {
@@ -23,9 +25,6 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
 
                 if (success) {
                     store.dispatch(loginUserSuccess({ token, email }));
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('isLoggedIn', 'true');
                 } else {
                     store.dispatch(loginUserFailure(error));
                 }
@@ -35,7 +34,7 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
             });
     }
     if (action.type === registerUserRequest.toString()) {
-        fetch('https://loft-taxi.glitch.me/register', {
+        fetch(`${BASE_URL}/register`, {
             method: 'POST',
             body: JSON.stringify(action.payload),
             headers: {
@@ -49,9 +48,6 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
 
                 if (success) {
                     store.dispatch(registerUserSuccess({ token, email }));
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('isLoggedIn', 'true');
                 } else {
                     store.dispatch(registerUserFailure(error));
                 }

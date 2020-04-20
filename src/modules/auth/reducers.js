@@ -18,7 +18,7 @@ const isLoggedIn = handleActions(
         [registerUserFailure]: () => false,
         [logoutUser]: () => false,
     },
-    localStorage.getItem('isLoggedIn') === 'true' ? true : false
+    false
 );
 const error = handleActions(
     {
@@ -40,7 +40,7 @@ const token = handleActions(
         [registerUserFailure]: () => null,
         [logoutUser]: () => null,
     },
-    localStorage.getItem('token')
+    null
 );
 const email = handleActions(
     {
@@ -52,7 +52,7 @@ const email = handleActions(
         [registerUserFailure]: () => null,
         [logoutUser]: () => null,
     },
-    localStorage.getItem('email')
+    null
 );
 
 export default combineReducers({

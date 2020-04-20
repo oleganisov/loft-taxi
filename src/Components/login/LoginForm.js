@@ -119,6 +119,7 @@ const LoginForm = ({ classes, loginUserRequest }) => {
 
 LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
+    loginUserRequest: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

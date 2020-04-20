@@ -13,6 +13,7 @@ import { DatePicker } from '@material-ui/pickers';
 import { withStyles } from '@material-ui/core/styles';
 import { MCIcon } from 'loft-taxi-mui-theme';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {
     saveCardRequest,
     fetchCardRequest,
@@ -83,18 +84,18 @@ const CardCVCFormat = (props) => {
 
 const PaymentForm = ({
     classes,
-    saveCardRequest,
     token,
-    fetchCardRequest,
     cardNumber,
     cardName,
-    expDate,
     cvc,
+    expDate,
+    saveCardRequest,
+    fetchCardRequest,
 }) => {
-    const [inputNumber, setInputNumber] = useState();
+    const [inputNumber, setInputNumber] = useState('');
     const [inputName, setInputName] = useState('');
     const [inputDate, setInputDate] = useState(new Date());
-    const [inputCVC, setInputCVC] = useState();
+    const [inputCVC, setInputCVC] = useState('');
 
     const handlerSubmit = (e) => {
         e.preventDefault();
@@ -105,9 +106,20 @@ const PaymentForm = ({
 
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
-    // useEffect(() => {
-    //     fetchCardRequest();
-    // }, [fetchCardRequest]);
+    useEffect(() => {
+        if (token) {
+            fetchCardRequest(token);
+        }
+    }, [fetchCardRequest, token]);
+
+    useEffect(() => {
+        cardNumber ? setInputNumber(cardNumber) : setInputNumber('');
+        cardName ? setInputName(cardName) : setInputName('');
+        cvc ? setInputCVC(cvc) : setInputCVC('');
+        expDate
+            ? setInputDate(moment('01/' + expDate, 'DD/MM/YY'))
+            : setInputDate(new Date());
+    }, [cardNumber, cardName, cvc, expDate]);
 
     return (
         <Paper className={classes.paper}>
@@ -197,6 +209,13 @@ const PaymentForm = ({
 
 PaymentForm.propTypes = {
     classes: PropTypes.object.isRequired,
+    token: PropTypes.string.isRequired,
+    cardNumber: PropTypes.string,
+    cardName: PropTypes.string,
+    cvc: PropTypes.string,
+    expDate: PropTypes.string,
+    saveCardRequest: PropTypes.func.isRequired,
+    fetchCardRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

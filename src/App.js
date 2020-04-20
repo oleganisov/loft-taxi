@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Map from './Components/map';
 import Profile from './Components/profile';
 import Login from './Components/login';
@@ -22,6 +23,9 @@ const App = ({ isLoggedIn }) => {
             <Redirect to="/" />
         </Switch>
     );
+};
+App.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

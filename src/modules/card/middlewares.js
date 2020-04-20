@@ -8,8 +8,10 @@ import {
 } from './actions';
 
 export const cardFetchMiddleware = (store) => (next) => (action) => {
+    const BASE_URL = 'https://loft-taxi.glitch.me/';
+
     if (action.type === saveCardRequest.toString()) {
-        fetch('https://loft-taxi.glitch.me/card', {
+        fetch(`${BASE_URL}/card`, {
             method: 'POST',
             body: JSON.stringify(action.payload),
             headers: {
@@ -42,9 +44,9 @@ export const cardFetchMiddleware = (store) => (next) => (action) => {
             });
     }
     if (action.type === fetchCardRequest.toString()) {
-        const token = localStorage.getItem('token');
+        const token = action.payload;
 
-        fetch(`https://loft-taxi.glitch.me/card?token=${token}`)
+        fetch(`${BASE_URL}/card?token=${token}`)
             .then((response) => response.json())
             .then((json) => {
                 store.dispatch(fetchCardSuccess(json));

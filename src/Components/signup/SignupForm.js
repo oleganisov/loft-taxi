@@ -132,6 +132,7 @@ const SignupForm = ({ classes, registerUserRequest }) => {
 };
 SignupForm.propTypes = {
     classes: PropTypes.object.isRequired,
+    registerUserRequest: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

@@ -47,6 +47,7 @@ const Header = ({ classes, logoutUser }) => {
 };
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

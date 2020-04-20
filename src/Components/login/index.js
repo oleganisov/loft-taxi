@@ -39,6 +39,7 @@ const Login = ({ classes, isLoggedIn }) => {
 
 Login.propTypes = {
     classes: PropTypes.object.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
 };
 const mapStateToProps = (state) => ({
     isLoggedIn: getIsLoggedIn(state),
