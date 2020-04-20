@@ -36,3 +36,4 @@ describe('App', () => {
         // Pretty print the DOM tree of your render
         debug();
     });
+});

@@ -105,9 +105,9 @@ const PaymentForm = ({
 
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
-    useEffect(() => {
-        fetchCardRequest();
-    }, [fetchCardRequest]);
+    // useEffect(() => {
+    //     fetchCardRequest();
+    // }, [fetchCardRequest]);
 
     return (
         <Paper className={classes.paper}>

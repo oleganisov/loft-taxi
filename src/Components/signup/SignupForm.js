@@ -37,7 +37,11 @@ const SignupForm = ({ classes, registerUserRequest }) => {
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit} id="signup-form">
+            <form
+                onSubmit={handlerSubmit}
+                id="signup-form"
+                data-testid="signup-form"
+            >
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -104,7 +108,7 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         <Input
                             className={classes.input}
                             id="signup_password"
-                            name="signup_password"
+                            name="password"
                             type="password"
                             placeholder="Пароль"
                             required
@@ -134,4 +138,7 @@ const mapDispatchToProps = {
     registerUserRequest,
 };
 
-export default connect(null,mapDispatchToProps)(withStyles(styles)(SignupForm));
+export default connect(
+    null,
+    mapDispatchToProps
+)(withStyles(styles)(SignupForm));

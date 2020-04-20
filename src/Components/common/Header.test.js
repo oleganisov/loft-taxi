@@ -9,45 +9,71 @@ import {
 import Header from './Header';
 import createStore from '../../store';
 import { BrowserRouter } from 'react-router-dom';
+import { logoutUser } from '../../modules/auth';
+import { Provider } from 'react-redux';
 
 const store = createStore();
 
 describe('Header menu', () => {
-    const logoutUserMock = jest.fn();
-    let getByText, getByTestId;
-    beforeEach(() => {
-        const queries = render(
-            <BrowserRouter>
-                <Header logoutUser={logoutUserMock} store={store} />
-            </BrowserRouter>
-        );
-
-        getByText = queries.getByText;
-        getByTestId = queries.getByTestId;
-    });
-    afterEach(() => {
-        cleanup();
-    });
+    // const logoutUserMock = jest.fn();
 
     it('get button Map', () => {
+        const { getByText } = render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header logoutUser={logoutUser} />
+                </BrowserRouter>
+            </Provider>
+        );
+
         expect(getByText('Карта')).toBeInTheDocument();
     });
 
     it('get button Profile', () => {
-        expect(getByTestId('link-profile')).toBeInTheDocument();
+        const { getByText } = render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header logoutUser={logoutUser} />
+                </BrowserRouter>
+            </Provider>
+        );
+        expect(getByText('Профиль')).toBeInTheDocument();
+    });
+    it('get button Logout', () => {
+        const { getByText } = render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header logoutUser={logoutUser} />
+                </BrowserRouter>
+            </Provider>
+        );
+        expect(getByText('Выйти')).toBeInTheDocument();
     });
 
     test('click button Profile', async () => {
-        fireEvent.click(getByTestId('link-profile'));
+        const { getByText, findByTestId } = render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header logoutUser={logoutUser} />
+                </BrowserRouter>
+            </Provider>
+        );
 
-        expect(await screen.findByTestId('payment-form')).toBeInTheDocument();
+        fireEvent.click(getByText('Профиль'));
+        expect(await findByTestId('payment-form')).toBeInTheDocument();
     });
-    it('click button Map', () => {
-        fireEvent.click(getByText('Карта'));
-        expect(handlerPageMock).toHaveBeenCalled();
-    });
+
     it('click button Logout', () => {
+        const { getByText, debug } = render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header logoutUser={logoutUser} />
+                </BrowserRouter>
+            </Provider>
+        );
+
         fireEvent.click(getByText('Выйти'));
-        expect(logoutUserMock).toHaveBeenCalled();
+        debug();
+        expect(getByText('Войти')).toBeInTheDocument();
     });
 });

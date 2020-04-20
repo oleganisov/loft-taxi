@@ -3,19 +3,20 @@ import { render, fireEvent } from '@testing-library/react';
 import SignupForm from './SignupForm';
 import createStore from '../../store';
 import { BrowserRouter } from 'react-router-dom';
+import { registerUserRequest } from '../../modules/auth';
+import { Provider } from 'react-redux';
 
 const store = createStore();
 
 describe('SignupForm', () => {
-    const registerUserRequestMock = jest.fn();
+    // const registerUserRequestMock = jest.fn();
     let getByText, getByTestId;
     beforeEach(() => {
         const queries = render(
             <BrowserRouter>
-                <SignupForm
-                    registerUserRequest={registerUserRequestMock}
-                    store={store}
-                />
+                <Provider store={store}>
+                    <SignupForm registerUserRequest={registerUserRequest} />
+                </Provider>
             </BrowserRouter>
         );
         getByText = queries.getByText;
@@ -35,8 +36,15 @@ describe('SignupForm', () => {
         expect(inputEmail.value).toBe('user1@domain.com');
     });
     it('click submit', () => {
-        fireEvent.click(getByTestId('signup-submit'));
+        fireEvent.submit(getByTestId('signup-form'), {
+            target: {
+                firstname: 'User3',
+                lastname: 'User',
+                email: 'user3@domain.com',
+                password: 'user3',
+            },
+        });
 
-        expect(registerUserRequestMock).toHaveBeenCalled();
+        expect(registerUserRequest).toHaveBeenCalled();
     });
 });

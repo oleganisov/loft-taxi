@@ -49,6 +49,5 @@ describe('LoginForm', () => {
             expect(screen.getByTestId('login-form')).toBeFalsy()
         );
         // await waitFor(() => expect(getByTestId('page-map')).toBeTruthy());
-        // await waitFor(() => screen.getByRole('heading'));
     });
 });
