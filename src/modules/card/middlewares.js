@@ -6,10 +6,9 @@ import {
     fetchCardSuccess,
     fetchCardFailure,
 } from './actions';
+import BASE_URL from '../../helpers/constant';
 
 export const cardFetchMiddleware = (store) => (next) => (action) => {
-    const BASE_URL = 'https://loft-taxi.glitch.me/';
-
     if (action.type === saveCardRequest.toString()) {
         fetch(`${BASE_URL}/card`, {
             method: 'POST',

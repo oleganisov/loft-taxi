@@ -6,9 +6,9 @@ import {
     registerUserSuccess,
     registerUserFailure,
 } from './actions';
+import BASE_URL from '../../helpers/constant';
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
-    const BASE_URL = 'https://loft-taxi.glitch.me/';
 
     if (action.type === loginUserRequest.toString()) {
         fetch(`${BASE_URL}/auth`, {
