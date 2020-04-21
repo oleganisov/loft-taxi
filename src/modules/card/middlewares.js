@@ -6,7 +6,7 @@ import {
     fetchCardSuccess,
     fetchCardFailure,
 } from './actions';
-import BASE_URL from '../../helpers/constant';
+import { BASE_URL } from '../../helpers/constant';
 
 export const cardFetchMiddleware = (store) => (next) => (action) => {
     if (action.type === saveCardRequest.toString()) {

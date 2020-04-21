@@ -6,10 +6,9 @@ import {
     registerUserSuccess,
     registerUserFailure,
 } from './actions';
-import BASE_URL from '../../helpers/constant';
+import { BASE_URL } from '../../helpers/constant';
 
 export const authFetchMiddleware = (store) => (next) => (action) => {
-
     if (action.type === loginUserRequest.toString()) {
         fetch(`${BASE_URL}/auth`, {
             method: 'POST',
