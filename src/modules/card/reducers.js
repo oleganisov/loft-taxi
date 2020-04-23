@@ -9,6 +9,16 @@ import {
     fetchCardFailure,
 } from './actions';
 
+const isProfileUpdated = handleActions(
+    {
+        [saveCardSuccess]: () => true,
+        [saveCardFailure]: () => false,
+        [fetchCardSuccess]: () => true,
+        [fetchCardFailure]: () => false,
+    },
+    false
+);
+
 const id = handleActions(
     {
         [saveCardRequest]: () => null,
@@ -78,6 +88,7 @@ const error = handleActions(
 );
 
 export default combineReducers({
+    isProfileUpdated,
     id,
     cardNumber,
     cardName,

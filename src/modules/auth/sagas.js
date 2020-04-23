@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call, fork } from 'redux-saga/effects';
 import {
     loginUserRequest,
     loginUserSuccess,
@@ -8,6 +8,7 @@ import {
     registerUserFailure,
 } from './actions';
 import * as api from './api';
+import { fetchCard } from '../card/sagas';
 
 export default function* watcher() {
     yield takeLatest(loginUserRequest, loginAuth);
@@ -22,6 +23,8 @@ function* loginAuth(action) {
 
         if (success) {
             yield put(loginUserSuccess({ token, email }));
+
+            yield fork(fetchCard, token);
         } else {
             yield put(loginUserFailure(error));
         }

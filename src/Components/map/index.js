@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Header from '../common/Header';
+import { drawRoute } from './drawRoute';
+import Order from './Order';
 
 const styles = {
     width: '100vw',
@@ -33,7 +35,14 @@ const Map = () => {
     return (
         <>
             <Header />
-            <div data-testid="page-map" ref={mapContainerRef} style={styles} />
+            <div style={{ position: 'relative', zIndex: -10 }}>
+                <div
+                    data-testid="page-map"
+                    ref={mapContainerRef}
+                    style={styles}
+                />
+                <Order />
+            </div>
         </>
     );
 };
