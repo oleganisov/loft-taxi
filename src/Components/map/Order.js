@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -21,7 +21,11 @@ const styles = () => ({
     },
 });
 
-const Order = ({ classes, isProfileUpdated }) => {
+const Order = ({ classes, isProfileUpdated, isOrdered, reset, orderTaxi }) => {
+    const handleClick = () => {
+        reset();
+    };
+
     function OrderForm() {
         if (!isProfileUpdated) {
             return (
@@ -52,7 +56,35 @@ const Order = ({ classes, isProfileUpdated }) => {
                 </Paper>
             );
         }
-        return <SearchForm />;
+        if (isOrdered) {
+            return (
+                <Paper className={classes.paper}>
+                    <Grid container direction="column">
+                        <Typography
+                            className={classes.text}
+                            component="h1"
+                            variant="h4"
+                            align="left"
+                        >
+                            Заказ размещён
+                        </Typography>
+                        <Typography className={classes.text}>
+                            Ваше такси уже едет к вам. Прибудет приблизительно
+                            через 10 минут.
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            onClick={handleClick}
+                        >
+                            Сделать новый заказ
+                        </Button>
+                    </Grid>
+                </Paper>
+            );
+        }
+        return <SearchForm orderTaxi={orderTaxi} />;
     }
     return (
         <Container className={classes.container}>
@@ -68,6 +100,8 @@ const Order = ({ classes, isProfileUpdated }) => {
 Order.propTypes = {
     classes: PropTypes.object.isRequired,
     isProfileUpdated: PropTypes.bool.isRequired,
+    isOrdered: PropTypes.bool.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
     isProfileUpdated: getIsProfileUpdated(state),

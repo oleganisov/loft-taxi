@@ -29,9 +29,10 @@ const SearchForm = ({
     getAddressListRequest,
     getRouteRequest,
     addresses,
+    orderTaxi,
 }) => {
-    const [addressFrom, setAddressFrom] = useState('');
-    const [addressTo, setAddressTo] = useState('');
+    const [addressFrom, setAddressFrom] = useState(undefined);
+    const [addressTo, setAddressTo] = useState(undefined);
 
     let addressListFrom = addresses
         .filter((item) => (addressTo ? item !== addressTo.value : true))
@@ -50,6 +51,7 @@ const SearchForm = ({
         const address2 = e.target.address_to.value;
 
         getRouteRequest({ address1, address2 });
+        orderTaxi();
     };
 
     useEffect(() => {
@@ -91,6 +93,7 @@ const SearchForm = ({
                             fullWidth
                             type="submit"
                             data-testid="login-submit"
+                            disabled={!addressFrom || !addressTo}
                         >
                             Вызвать такси
                         </Button>
