@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import createStore from './store';
 import { Provider } from 'react-redux';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, wait } from '@testing-library/react';
 import App from './App';
 
 const store = createStore();
@@ -37,7 +37,7 @@ describe('App render/print', () => {
 });
 
 describe('Login/Signup', () => {
-    let queryByTestId, getByText;
+    let getByTestId, getByText;
     beforeEach(() => {
         const queries = render(
             <BrowserRouter>
@@ -46,15 +46,31 @@ describe('Login/Signup', () => {
                 </Provider>
             </BrowserRouter>
         );
-        queryByTestId = queries.queryByTestId;
+        getByTestId = queries.getByTestId;
         getByText = queries.getByText;
     });
 
     it('click link register/login', () => {
         fireEvent.click(getByText(/зарегистрируйтесь/i));
-        expect(queryByTestId('signup-form')).toBeTruthy();
+        expect(getByTestId('signup-form')).toBeTruthy();
 
         fireEvent.click(getByText(/войти/i));
-        expect(queryByTestId('login-form')).toBeTruthy();
+        expect(getByTestId('login-form')).toBeTruthy();
+    });
+
+    it('login submit', () => {
+        fireEvent.click(getByTestId('login-submit'), {
+            target: { username: 'john@enterprise.com', password: 'enterprise' },
+        });
+
+        wait(() => expect(getByText(/выйти/i)).toBeTruthy());
+    });
+    it('logout', () => {
+        fireEvent.click(getByTestId('login-submit'), {
+            target: { username: 'john@enterprise.com', password: 'enterprise' },
+        });
+
+        wait(() => fireEvent.click(getByText(/выйти/i)));
+        wait(() => expect(getByText(/новый пользователь/i)).toBeTruthy());
     });
 });
