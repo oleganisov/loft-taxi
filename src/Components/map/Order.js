@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { getIsProfileUpdated } from '../../modules/card';
-import SearchForm from './SearchForm';
+import OrderForm from './OrderForm';
 
 const styles = () => ({
     text: {
@@ -26,7 +26,7 @@ const Order = ({ classes, isProfileUpdated, isOrdered, reset, orderTaxi }) => {
         reset();
     };
 
-    function OrderForm() {
+    const Layout = () => {
         if (!isProfileUpdated) {
             return (
                 <Paper className={classes.paper}>
@@ -84,13 +84,13 @@ const Order = ({ classes, isProfileUpdated, isOrdered, reset, orderTaxi }) => {
                 </Paper>
             );
         }
-        return <SearchForm orderTaxi={orderTaxi} />;
-    }
+        return <OrderForm orderTaxi={orderTaxi} />;
+    };
     return (
         <Container className={classes.container}>
             <Paper className={classes.order}>
                 <Container className={classes.orderContainer}>
-                    <OrderForm />
+                    <Layout />
                 </Container>
             </Paper>
         </Container>

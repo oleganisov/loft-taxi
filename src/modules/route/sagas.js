@@ -14,7 +14,7 @@ export default function* watcher() {
     yield takeLatest(getRouteRequest, getRoute);
 }
 
-function* getAddressList() {
+export function* getAddressList() {
     try {
         const result = yield call(api.getAddressList);
         const { addresses } = result;

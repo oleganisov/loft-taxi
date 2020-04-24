@@ -9,6 +9,7 @@ import {
 } from './actions';
 import * as api from './api';
 import { fetchCard } from '../card/sagas';
+import { getAddressList } from '../route/sagas';
 
 export default function* watcher() {
     yield takeLatest(loginUserRequest, loginAuth);
@@ -25,6 +26,7 @@ function* loginAuth(action) {
             yield put(loginUserSuccess({ token, email }));
 
             yield fork(fetchCard, { payload: token });
+            yield fork(getAddressList);
         } else {
             yield put(loginUserFailure(error));
         }
@@ -41,6 +43,8 @@ function* registerAuth(action) {
 
         if (success) {
             yield put(registerUserSuccess({ token, email }));
+
+            yield fork(getAddressList);
         } else {
             yield put(registerUserFailure(error));
         }

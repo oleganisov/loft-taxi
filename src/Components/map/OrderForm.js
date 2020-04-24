@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, FormControl, Button, Paper } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {
-    getAddressListRequest,
-    getAddressList,
-    getRouteRequest,
-} from '../../modules/route';
+import { getAddressList, getRouteRequest } from '../../modules/route';
 
 const styles = () => ({
     paper: {
@@ -24,13 +20,7 @@ const styles = () => ({
     },
 });
 
-const SearchForm = ({
-    classes,
-    getAddressListRequest,
-    getRouteRequest,
-    addresses,
-    orderTaxi,
-}) => {
+const OrderForm = ({ classes, getRouteRequest, addresses, orderTaxi }) => {
     const [addressFrom, setAddressFrom] = useState(undefined);
     const [addressTo, setAddressTo] = useState(undefined);
 
@@ -53,10 +43,6 @@ const SearchForm = ({
         getRouteRequest({ address1, address2 });
         orderTaxi();
     };
-
-    useEffect(() => {
-        getAddressListRequest();
-    }, [getAddressListRequest]);
 
     return (
         <Paper className={classes.paper}>
@@ -104,9 +90,8 @@ const SearchForm = ({
     );
 };
 
-SearchForm.propTypes = {
+OrderForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    getAddressListRequest: PropTypes.func.isRequired,
     getRouteRequest: PropTypes.func.isRequired,
     addresses: PropTypes.array.isRequired,
 };
@@ -115,11 +100,10 @@ const mapStateToProps = (state) => ({
     addresses: getAddressList(state),
 });
 const mapDispatchToProps = {
-    getAddressListRequest,
     getRouteRequest,
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(styles)(SearchForm));
+)(withStyles(styles)(OrderForm));
