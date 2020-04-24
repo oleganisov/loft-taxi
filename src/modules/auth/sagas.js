@@ -24,7 +24,7 @@ function* loginAuth(action) {
         if (success) {
             yield put(loginUserSuccess({ token, email }));
 
-            yield fork(fetchCard, token);
+            yield fork(fetchCard, { payload: token });
         } else {
             yield put(loginUserFailure(error));
         }
