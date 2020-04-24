@@ -41,10 +41,22 @@ const coordinates = handleActions(
     },
     []
 );
+const error = handleActions(
+    {
+        [getRouteRequest]: () => null,
+        [getRouteSuccess]: () => null,
+        [getRouteFailure]: (_state, action) => action.payload,
+        [getAddressListRequest]: () => null,
+        [getAddressListSuccess]: () => null,
+        [getAddressListFailure]: (_state, action) => action.payload,
+    },
+    null
+);
 
 export default combineReducers({
     addresses,
     address1,
     address2,
     coordinates,
+    error,
 });
