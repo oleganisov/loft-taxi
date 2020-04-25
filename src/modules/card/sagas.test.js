@@ -18,6 +18,7 @@ describe('card', () => {
             expiryDate: '04/25',
             cvc: '000',
         };
+        const error = new Error('Something went wrong');
         api.saveCard = jest.fn();
 
         beforeEach(() => {
@@ -38,8 +39,9 @@ describe('card', () => {
         });
 
         it('save card failed', async () => {
-            const result = { success: false, error: 'Something went wrong' };
-            api.saveCard.mockImplementation(() => result);
+            api.saveCard.mockImplementation(() => {
+                throw error;
+            });
 
             const dispatched = await recordSaga(
                 sagas.saveCard,
@@ -47,11 +49,12 @@ describe('card', () => {
             );
 
             expect(api.saveCard).toHaveBeenCalledWith(payload);
-            expect(dispatched).toContainEqual(saveCardFailure(result.error));
+            expect(dispatched).toContainEqual(saveCardFailure(error));
         });
     });
     describe('fetch card', () => {
         const token = 'recd6LsCFED9hoBnN';
+        const error = new Error('Something went wrong');
         api.fetchCard = jest.fn();
 
         beforeEach(() => {
@@ -78,8 +81,9 @@ describe('card', () => {
         });
 
         it('fetch card failed', async () => {
-            const result = { success: false, error: 'Something went wrong' };
-            api.fetchCard.mockImplementation(() => result);
+            api.fetchCard.mockImplementation(() => {
+                throw error;
+            });
 
             const dispatched = await recordSaga(
                 sagas.fetchCard,
@@ -87,7 +91,7 @@ describe('card', () => {
             );
 
             expect(api.fetchCard).toHaveBeenCalledWith(token);
-            expect(dispatched).toContainEqual(fetchCardFailure(result.error));
+            expect(dispatched).toContainEqual(fetchCardFailure(error));
         });
     });
 });

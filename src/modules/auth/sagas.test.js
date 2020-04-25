@@ -18,6 +18,7 @@ describe('auth', () => {
             name: 'John',
             surname: 'Dow',
         };
+        const error = new Error('Something went wrong');
         api.loginAuth = jest.fn();
 
         beforeEach(() => {
@@ -40,8 +41,9 @@ describe('auth', () => {
         });
 
         it('login failed', async () => {
-            const result = { success: false, error: 'Something went wrong' };
-            api.loginAuth.mockImplementation(() => result);
+            api.loginAuth.mockImplementation(() => {
+                throw error;
+            });
 
             const dispatched = await recordSaga(
                 sagas.loginAuth,
@@ -49,7 +51,7 @@ describe('auth', () => {
             );
 
             expect(api.loginAuth).toHaveBeenCalledWith(payload);
-            expect(dispatched).toContainEqual(loginUserFailure(result.error));
+            expect(dispatched).toContainEqual(loginUserFailure(error));
         });
     });
     describe('register', () => {
@@ -57,6 +59,7 @@ describe('auth', () => {
             email: 'john@enterprise.com',
             password: 'enterprise',
         };
+        const error = new Error('Something went wrong');
         api.registerAuth = jest.fn();
 
         beforeEach(() => {
@@ -82,8 +85,9 @@ describe('auth', () => {
         });
 
         it('register failed', async () => {
-            const result = { success: false, error: 'Something went wrong' };
-            api.registerAuth.mockImplementation(() => result);
+            api.registerAuth.mockImplementation(() => {
+                throw error;
+            });
 
             const dispatched = await recordSaga(
                 sagas.registerAuth,
@@ -91,9 +95,7 @@ describe('auth', () => {
             );
 
             expect(api.registerAuth).toHaveBeenCalledWith(payload);
-            expect(dispatched).toContainEqual(
-                registerUserFailure(result.error)
-            );
+            expect(dispatched).toContainEqual(registerUserFailure(error));
         });
     });
 });
