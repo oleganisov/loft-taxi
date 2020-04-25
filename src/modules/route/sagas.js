@@ -24,7 +24,7 @@ export function* getAddressList() {
     }
 }
 
-function* getRoute(action) {
+export function* getRoute(action) {
     try {
         const result = yield call(api.getRoute, action.payload);
         const { address1, address2 } = action.payload;

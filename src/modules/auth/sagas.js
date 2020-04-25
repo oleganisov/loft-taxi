@@ -16,7 +16,7 @@ export default function* watcher() {
     yield takeLatest(registerUserRequest, registerAuth);
 }
 
-function* loginAuth(action) {
+export function* loginAuth(action) {
     try {
         const result = yield call(api.loginAuth, action.payload);
         const { success, token, error } = result;
@@ -35,7 +35,7 @@ function* loginAuth(action) {
     }
 }
 
-function* registerAuth(action) {
+export function* registerAuth(action) {
     try {
         const result = yield call(api.registerAuth, action.payload);
         const { success, token, error } = result;

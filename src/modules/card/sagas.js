@@ -14,7 +14,7 @@ export default function* watcher() {
     yield takeLatest(fetchCardRequest, fetchCard);
 }
 
-function* saveCard(action) {
+export function* saveCard(action) {
     try {
         const result = yield call(api.saveCard, action.payload);
         const { success, error } = result;
