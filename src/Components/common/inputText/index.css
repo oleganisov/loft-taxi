@@ -1,0 +1,8 @@
+.form_input {
+    border: none;
+    border-bottom: 1px solid rgb(234, 234, 234);
+    margin-bottom: 45px;
+}
+.form_input:focus {
+    border-bottom: 1px solid rgb(20, 115, 230);
+}

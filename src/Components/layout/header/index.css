@@ -1,0 +1,24 @@
+.header {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.header__list {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+.header__link {
+    color: rgb(50, 50, 50);
+    display: block;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.header__link:hover {
+    background-color: rgb(234, 234, 234);
+}

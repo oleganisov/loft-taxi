@@ -1,26 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Layout from './Components/layout';
+import Map from './Components/map';
+import Profile from './Components/profile';
+import LoginForm from './Components/login';
+import SignupForm from './Components/signup';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = { navigation: 'login' };
+    handlerMenu = e => {
+        e.preventDefault();
+        if (e.target) {
+            let link = e.target.getAttribute('href');
+
+            this.setState({ navigation: link });
+        }
+    };
+    handlerLogin = e => {
+        e.preventDefault();
+        this.setState({ navigation: 'map' });
+    };
+    handlerLoginLink = e => {
+        e.preventDefault();
+        this.setState({ navigation: 'login' });
+    };
+    handlerSignup = e => {
+        e.preventDefault();
+        this.setState({ navigation: 'map' });
+    };
+    handlerSignupLink = e => {
+        e.preventDefault();
+        this.setState({ navigation: 'signup' });
+    };
+
+    render() {
+        const { navigation } = this.state;
+
+        if (navigation === 'login')
+            return (
+                <LoginForm
+                    handlerLogin={this.handlerLogin}
+                    handlerSignupLink={this.handlerSignupLink}
+                />
+            );
+        else if (navigation === 'signup')
+            return (
+                <SignupForm
+                    handlerSignup={this.handlerSignup}
+                    handlerLoginLink={this.handlerLoginLink}
+                />
+            );
+        else if (navigation === 'map')
+            return (
+                <Layout handlerMenu={this.handlerMenu}>
+                    <Map />
+                </Layout>
+            );
+        else if (navigation === 'profile')
+            return (
+                <Layout handlerMenu={this.handlerMenu}>
+                    <Profile />
+                </Layout>
+            );
+    }
 }
 
 export default App;
