@@ -1,59 +1,41 @@
 import React from 'react';
-import InputText from '../common/inputText';
-import Logo from '../common/logo';
-import ButtonActive from '../common/buttonActive';
+import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Logo } from 'loft-taxi-mui-theme';
+import Background from '../common/Background';
+import SignupForm from './SignupForm';
 
-import './index.css';
+const styles = () => ({
+    logo: {
+        marginRight: '215px',
+    },
+});
 
-const SignupForm = ({ handlerSignup, handlerLoginLink }) => {
+const Signup = ({ classes, handlerPage }) => {
     return (
-        <>
-            <div className="wrapper_form">
-                <Logo logoClass="signup_logo" txtRightClass="text_white" />
-                <form className="signup_form" onSubmit={handlerSignup}>
-                    <h1 className="signup_form__header">Регистрация</h1>
-                    <div className="signup_form__text">
-                        <span className="signup_form__span">
-                            Уже зарегистрирован?
-                        </span>
-                        <a href="/login" onClick={handlerLoginLink}>
-                            Войти
-                        </a>
-                    </div>
-                    <InputText
-                        inputClass="signup_form__email"
-                        type="email"
-                        name="email"
-                        placeholder="Адрес электронной почты*"
-                    />
-                    <div className="signup_form__fullname">
-                        <InputText
-                            inputClass="signup_form__firstname"
-                            type="text"
-                            name="firstname"
-                            placeholder="Имя*"
-                        />
-                        <InputText
-                            inputClass="signup_form__lastname"
-                            type="text"
-                            name="lastname"
-                            placeholder="Фамилия*"
-                        />
-                    </div>
-                    <InputText
-                        inputClass="signup_form__password"
-                        type="password"
-                        name="password"
-                        placeholder="Пароль*"
-                    />
-                    <ButtonActive
-                        buttonClass="signup_form__submit"
-                        text="Войти"
-                    />
-                </form>
-            </div>
-        </>
+        <Background>
+            <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                style={{ minHeight: '100vh' }}
+            >
+                <Logo
+                    white={true}
+                    animated={true}
+                    classes={{ logo: classes.logo }}
+                />
+                <SignupForm handlerPage={handlerPage} />
+            </Grid>
+        </Background>
     );
 };
 
-export default SignupForm;
+Signup.propTypes = {
+    classes: PropTypes.object.isRequired,
+    handlerPage: PropTypes.func.isRequired,
+};
+
+export default withStyles(styles)(Signup);

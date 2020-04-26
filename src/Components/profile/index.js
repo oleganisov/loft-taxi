@@ -1,9 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Background from '../common/Background';
+import PaymentForm from './PaymentForm';
 
-import './index.css';
+const styles = () => ({
+    root: { paddingTop: '50px' },
+});
 
-const Profile = () => {
-    return <h2>Профиль</h2>;
+const Profile = ({ classes }) => {
+    return (
+        <Background>
+            <Grid
+                className={classes.root}
+                container
+                direction="column"
+                style={{ minHeight: 'calc(100vh - 66.39px)' }}
+            >
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <PaymentForm />
+                </Grid>
+            </Grid>
+        </Background>
+    );
 };
 
-export default Profile;
+Profile.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Profile);
