@@ -94,6 +94,7 @@ OrderForm.propTypes = {
     classes: PropTypes.object.isRequired,
     getRouteRequest: PropTypes.func.isRequired,
     addresses: PropTypes.array.isRequired,
+    orderTaxi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

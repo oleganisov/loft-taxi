@@ -42,8 +42,13 @@ const Map = ({ coordinates }) => {
         if (!map) initializeMap({ setMap, mapContainerRef });
     }, [map]);
 
+    useEffect(() => {
+        if (coordinates.length && map) {
+            drawRoute(map, coordinates);
+        }
+    }, [map, coordinates]);
+
     const orderTaxi = () => {
-        drawRoute(map, coordinates);
         setIsOrdered(true);
     };
 

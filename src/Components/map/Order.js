@@ -102,6 +102,7 @@ Order.propTypes = {
     isProfileUpdated: PropTypes.bool.isRequired,
     isOrdered: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
+    orderTaxi: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
     isProfileUpdated: getIsProfileUpdated(state),
