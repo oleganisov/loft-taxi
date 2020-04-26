@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, wait, waitFor } from '@testing-library/react';
+import { render, fireEvent, wait } from '@testing-library/react';
 import Header from './Header';
 import createStore from '../../store';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 const store = createStore();
 
 describe('Header menu', () => {
-    let getByText, debug;
+    let getByText;
     beforeEach(() => {
         const queries = render(
             <Provider store={store}>
@@ -18,7 +18,6 @@ describe('Header menu', () => {
             </Provider>
         );
         getByText = queries.getByText;
-        debug = queries.debug;
     });
 
     it('get button Map', () => {
