@@ -139,6 +139,7 @@ const PaymentForm = ({
                                 InputProps={{
                                     inputComponent: CardNumberFormat,
                                 }}
+                                InputLabelProps={{ shrink: true }}
                             />
                             <DatePicker
                                 id="card_date"
@@ -165,6 +166,7 @@ const PaymentForm = ({
                                 margin="normal"
                                 value={inputName}
                                 onChange={(e) => setInputName(e.target.value)}
+                                InputLabelProps={{ shrink: true }}
                             />
                             <TextField
                                 id="card_cvc"
@@ -179,6 +181,7 @@ const PaymentForm = ({
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}
+                                InputLabelProps={{ shrink: true }}
                             />
                         </Card>
                     </Grid>

@@ -38,6 +38,11 @@ export function* saveCard(action) {
 export function* fetchCard(action) {
     try {
         const result = yield call(api.fetchCard, action.payload);
+        const { success, error } = result;
+
+        if (success === false) {
+            throw error;
+        }
 
         yield put(fetchCardSuccess(result));
     } catch (error) {
