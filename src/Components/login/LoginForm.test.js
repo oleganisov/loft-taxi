@@ -1,44 +1,53 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import {
+    render,
+    cleanup,
+    fireEvent,
+    waitFor,
+    screen,
+} from '@testing-library/react';
 import LoginForm from './LoginForm';
-import { AuthProvider } from '../authContext';
+import createStore from '../../store';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+const store = createStore();
 
 describe('LoginForm', () => {
-    const handlerPageMock = jest.fn();
-    let getByText, getByLabelText, getByTestId;
+    const loginUserRequestMock = jest.fn();
     beforeEach(() => {
-        const queries = render(
-            <AuthProvider>
-                <LoginForm handlerPage={handlerPageMock} />
-            </AuthProvider>
+        render(
+            <BrowserRouter>
+                <Provider store={store}>
+                    <LoginForm loginUserRequest={loginUserRequestMock} />
+                </Provider>
+            </BrowserRouter>
         );
-
-        getByText = queries.getByText;
-        getByLabelText = queries.getByLabelText;
-        getByTestId = queries.getByTestId;
     });
     afterEach(() => {
         cleanup();
     });
-
     it('get link register', () => {
-        const linkElement = getByText(/^зарегистрируйтесь$/i);
+        const linkElement = screen.getByText(/^зарегистрируйтесь$/i);
 
         expect(linkElement).toBeInTheDocument();
     });
     it('Username input changes', () => {
-        const inputUserName = getByLabelText(/имя пользователя/i);
+        const inputUserName = screen.getByLabelText(/имя пользователя/i);
 
-        fireEvent.change(inputUserName, { target: { value: 'user1' } });
-        expect(inputUserName.value).toBe('user1');
+        fireEvent.change(inputUserName, {
+            target: { value: 'user3@domain.com' },
+        });
+        expect(inputUserName.value).toBe('user3@domain.com');
     });
-    it('click submit', () => {
-        const inputUserName = getByLabelText(/имя пользователя/i);
-        const inputPassword = getByLabelText(/пароль/i);
-
-        fireEvent.change(inputUserName, { target: { value: 'user1' } });
-        fireEvent.change(inputPassword, { target: { value: 'pwd' } });
-        fireEvent.click(getByTestId('login-submit'));
-        expect(handlerPageMock).toHaveBeenCalled();
+    it('submit login form', async () => {
+        fireEvent.submit(screen.getByTestId('login-form'), {
+            target: { username: 'user3@domain.com', password: 'user3' },
+        });
+        // Wait for appearance
+        await waitFor(() =>
+            expect(screen.getByTestId('login-form')).toBeFalsy()
+        );
+        // await waitFor(() => expect(getByTestId('page-map')).toBeTruthy());
     });
 });

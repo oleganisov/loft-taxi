@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -11,7 +11,9 @@ import {
     Paper,
 } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AuthContext } from '../authContext';
+import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loginUserRequest } from '../../modules/auth';
 
 const styles = () => ({
     paper: {
@@ -22,26 +24,18 @@ const styles = () => ({
     },
 });
 
-const LoginForm = ({ classes, handlerPage }) => {
-    const authContext = useContext(AuthContext);
-    const handlerLogin = authContext.login;
+const LoginForm = ({ classes, loginUserRequest }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handlerSignupLink = (e) => {
-        e.preventDefault();
-        handlerPage('signup');
-    };
     const handlerSubmit = (e) => {
         e.preventDefault();
 
         if (e.target.username && e.target.password) {
-            const username = e.target.username.value;
+            const email = e.target.username.value;
             const password = e.target.password.value;
-
-            handlerLogin(username, password);
+            loginUserRequest({ email, password });
         }
-        handlerPage('map');
     };
     const handlerChangeUsername = (e) => {
         setUsername(e.target.value);
@@ -52,7 +46,11 @@ const LoginForm = ({ classes, handlerPage }) => {
 
     return (
         <Paper className={classes.paper}>
-            <form onSubmit={handlerSubmit} id="login-form">
+            <form
+                onSubmit={handlerSubmit}
+                id="login-form"
+                data-testid="login-form"
+            >
                 <Grid container direction="column">
                     <Typography
                         component="h1"
@@ -68,7 +66,8 @@ const LoginForm = ({ classes, handlerPage }) => {
                             align="left"
                             underline="none"
                             href="/signup"
-                            onClick={handlerSignupLink}
+                            component={RouterLink}
+                            to="/signup"
                         >
                             Зарегистрируйтесь
                         </Link>
@@ -120,7 +119,11 @@ const LoginForm = ({ classes, handlerPage }) => {
 
 LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
-    handlerPage: PropTypes.func.isRequired,
+    loginUserRequest: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(LoginForm);
+const mapDispatchToProps = {
+    loginUserRequest,
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Header from '../common/Header';
 
 const styles = {
     width: '100vw',
@@ -29,7 +30,12 @@ const Map = () => {
         return () => map.remove();
     }, []);
 
-    return <div ref={mapContainerRef} style={styles} />;
+    return (
+        <>
+            <Header />
+            <div data-testid="page-map" ref={mapContainerRef} style={styles} />
+        </>
+    );
 };
 
 export default Map;
