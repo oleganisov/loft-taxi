@@ -61,31 +61,3 @@ export default combineReducers({
     token,
     email,
 });
-
-// const initialState = {
-//     isLoggedIn: false,
-//     error: null,
-// };
-
-// export default (state = initialState, action) => {
-//     switch (action.type) {
-//         case loginUserRequest.toString():
-//             return {
-//                 ...state,
-//                 error: null,
-//             };
-//         case loginUserSuccess.toString():
-//             return {
-//                 ...state,
-//                 isLoggedIn: true,
-//             };
-//         case loginUserFailure.toString():
-//             return {
-//                 ...state,
-//                 isLoggedIn: false,
-//                 error: action.payload,
-//             };
-//         default:
-//             return { ...state };
-//     }
-// };

@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import {
     saveCardRequest,
-    fetchCardRequest,
     getCardNumber,
     getCardCVC,
     getCardExpDate,
@@ -90,7 +89,6 @@ const PaymentForm = ({
     cvc,
     expDate,
     saveCardRequest,
-    fetchCardRequest,
 }) => {
     const [inputNumber, setInputNumber] = useState('');
     const [inputName, setInputName] = useState('');
@@ -106,11 +104,6 @@ const PaymentForm = ({
 
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
     };
-    useEffect(() => {
-        if (token) {
-            fetchCardRequest(token);
-        }
-    }, [fetchCardRequest, token]);
 
     useEffect(() => {
         cardNumber ? setInputNumber(cardNumber) : setInputNumber('');
@@ -146,6 +139,7 @@ const PaymentForm = ({
                                 InputProps={{
                                     inputComponent: CardNumberFormat,
                                 }}
+                                InputLabelProps={{ shrink: true }}
                             />
                             <DatePicker
                                 id="card_date"
@@ -172,6 +166,7 @@ const PaymentForm = ({
                                 margin="normal"
                                 value={inputName}
                                 onChange={(e) => setInputName(e.target.value)}
+                                InputLabelProps={{ shrink: true }}
                             />
                             <TextField
                                 id="card_cvc"
@@ -186,6 +181,7 @@ const PaymentForm = ({
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}
+                                InputLabelProps={{ shrink: true }}
                             />
                         </Card>
                     </Grid>
@@ -215,7 +211,6 @@ PaymentForm.propTypes = {
     cvc: PropTypes.string,
     expDate: PropTypes.string,
     saveCardRequest: PropTypes.func.isRequired,
-    fetchCardRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -227,7 +222,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
     saveCardRequest,
-    fetchCardRequest,
 };
 
 export default connect(
