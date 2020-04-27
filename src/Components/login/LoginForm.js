@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -30,7 +30,6 @@ const LoginForm = ({ classes, loginUserRequest }) => {
         const { email, password } = data;
 
         if (email && password) {
-            console.log(data);
             loginUserRequest({ email, password });
         }
     };

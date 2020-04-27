@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
-    FormControl,
-    InputLabel,
-    Input,
+    TextField,
     Button,
     Typography,
     Link,
@@ -14,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUserRequest } from '../../modules/auth';
+import { useForm, Controller } from 'react-hook-form';
 
 const styles = () => ({
     paper: {
@@ -25,20 +24,19 @@ const styles = () => ({
     },
 });
 const SignupForm = ({ classes, registerUserRequest }) => {
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.signup_password.value;
-        const name = e.target.firstname.value;
-        const surname = e.target.lastname.value;
+    const { control, handleSubmit } = useForm();
+    const onSubmit = (data) => {
+        const { email, password, name, surname } = data;
 
-        registerUserRequest({ email, password, name, surname });
+        if (email && password && name && surname) {
+            registerUserRequest({ email, password, name, surname });
+        }
     };
 
     return (
         <Paper className={classes.paper}>
             <form
-                onSubmit={handlerSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 id="signup-form"
                 data-testid="signup-form"
             >
@@ -63,57 +61,50 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                             Войти
                         </Link>
                     </Typography>
-                    <FormControl required>
-                        <InputLabel htmlFor="email">
-                            Адрес электронной почты
-                        </InputLabel>
-                        <Input
-                            className={classes.input}
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="Адрес электронной почты"
-                            required
-                            inputProps={{ 'data-testid': 'email' }}
-                        />
-                    </FormControl>
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Адрес электронной почты"
+                        placeholder="Адрес электронной почты"
+                        name="email"
+                        type="email"
+                        control={control}
+                        required
+                        defaultValue=""
+                    />
                     <Grid>
-                        <FormControl required>
-                            <InputLabel htmlFor="firstname">Имя</InputLabel>
-                            <Input
-                                className={classes.input}
-                                id="firstname"
-                                name="firstname"
-                                type="text"
-                                placeholder="Имя"
-                                required
-                            />
-                        </FormControl>
-                        <FormControl required>
-                            <InputLabel htmlFor="lastname">Фамилия</InputLabel>
-                            <Input
-                                className={classes.input}
-                                id="lastname"
-                                name="lastname"
-                                type="text"
-                                placeholder="Фамилия"
-                                required
-                            />
-                        </FormControl>
-                    </Grid>
-                    <FormControl required>
-                        <InputLabel htmlFor="signup_password">
-                            Пароль
-                        </InputLabel>
-                        <Input
+                        <Controller
+                            as={TextField}
                             className={classes.input}
-                            id="signup_password"
-                            name="password"
-                            type="password"
-                            placeholder="Пароль"
+                            label="Имя"
+                            placeholder="Имя"
+                            name="name"
+                            control={control}
                             required
+                            defaultValue=""
                         />
-                    </FormControl>
+                        <Controller
+                            as={TextField}
+                            className={classes.input}
+                            label="Фамилия"
+                            placeholder="Фамилия"
+                            name="surname"
+                            control={control}
+                            required
+                            defaultValue=""
+                        />
+                    </Grid>
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Пароль"
+                        placeholder="Пароль"
+                        name="password"
+                        type="password"
+                        control={control}
+                        required
+                        defaultValue=""
+                    />
                     <Grid align="right">
                         <Button
                             variant="contained"
