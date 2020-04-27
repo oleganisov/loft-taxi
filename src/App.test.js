@@ -60,14 +60,14 @@ describe('Login/Signup', () => {
 
     it('login submit', () => {
         fireEvent.click(getByTestId('login-submit'), {
-            target: { username: 'john@enterprise.com', password: 'enterprise' },
+            target: { email: 'john@enterprise.com', password: 'enterprise' },
         });
 
         wait(() => expect(getByText(/выйти/i)).toBeTruthy());
     });
     it('logout', () => {
         fireEvent.click(getByTestId('login-submit'), {
-            target: { username: 'john@enterprise.com', password: 'enterprise' },
+            target: { email: 'john@enterprise.com', password: 'enterprise' },
         });
 
         wait(() => fireEvent.click(getByText(/выйти/i)));

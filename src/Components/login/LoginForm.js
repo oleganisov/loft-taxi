@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
-    FormControl,
-    InputLabel,
-    Input,
+    TextField,
     Button,
     Typography,
     Link,
@@ -14,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUserRequest } from '../../modules/auth';
+import { useForm, Controller } from 'react-hook-form';
 
 const styles = () => ({
     paper: {
@@ -25,29 +24,21 @@ const styles = () => ({
 });
 
 const LoginForm = ({ classes, loginUserRequest }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const { control, handleSubmit } = useForm();
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = (data) => {
+        const { email, password } = data;
 
-        if (e.target.username && e.target.password) {
-            const email = e.target.username.value;
-            const password = e.target.password.value;
+        if (email && password) {
+            console.log(data);
             loginUserRequest({ email, password });
         }
-    };
-    const handlerChangeUsername = (e) => {
-        setUsername(e.target.value);
-    };
-    const handlerChangePassword = (e) => {
-        setPassword(e.target.value);
     };
 
     return (
         <Paper className={classes.paper}>
             <form
-                onSubmit={handlerSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 id="login-form"
                 data-testid="login-form"
             >
@@ -72,34 +63,28 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                             Зарегистрируйтесь
                         </Link>
                     </Typography>
-                    <FormControl required>
-                        <InputLabel htmlFor="username">
-                            Имя пользователя
-                        </InputLabel>
-                        <Input
-                            className={classes.input}
-                            id="username"
-                            name="username"
-                            type="text"
-                            placeholder="Имя пользователя"
-                            required
-                            onChange={handlerChangeUsername}
-                            value={username}
-                        />
-                    </FormControl>
-                    <FormControl required>
-                        <InputLabel htmlFor="password">Пароль</InputLabel>
-                        <Input
-                            className={classes.input}
-                            id="password"
-                            name="password"
-                            type="password"
-                            placeholder="Пароль"
-                            required
-                            onChange={handlerChangePassword}
-                            value={password}
-                        />
-                    </FormControl>
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Имя пользователя"
+                        placeholder="Имя пользователя"
+                        name="email"
+                        type="email"
+                        control={control}
+                        required
+                        defaultValue=""
+                    />
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Пароль"
+                        placeholder="Пароль"
+                        name="password"
+                        type="password"
+                        control={control}
+                        required
+                        defaultValue=""
+                    />
                     <Grid align="right">
                         <Button
                             variant="contained"
