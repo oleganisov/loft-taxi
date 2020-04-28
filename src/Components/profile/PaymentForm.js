@@ -54,7 +54,7 @@ const PaymentForm = ({
     expDate,
     saveCardRequest,
 }) => {
-    const { control, handleSubmit, setValue } = useForm();
+    const { control, handleSubmit, setValue, errors } = useForm();
 
     const onSubmit = (data) => {
         const cardNumber = data.card_number;
@@ -158,6 +158,11 @@ const PaymentForm = ({
                                 required
                                 defaultValue=""
                                 InputLabelProps={{ shrink: true }}
+                                rules={{ pattern: /^[A-Z]+\s[A-Z]+$/ }}
+                                error={errors.card_owner}
+                                helperText={
+                                    errors.card_owner && 'формат IVAN IVANOV'
+                                }
                             />
                             <Controller
                                 as={TextField}
@@ -165,7 +170,7 @@ const PaymentForm = ({
                                 label="CVC"
                                 placeholder="CVC"
                                 name="card_cvc"
-                                type="password"
+                                // type="password"
                                 control={control}
                                 required
                                 defaultValue=""
@@ -174,9 +179,12 @@ const PaymentForm = ({
                                 }}
                                 InputLabelProps={{ shrink: true }}
                                 rules={{
-                                    minLength: 3,
-                                    maxLength: 3,
+                                    pattern: /^\d{3}$/,
                                 }}
+                                error={errors.card_cvc}
+                                helperText={
+                                    errors.card_cvc && 'должно быть 3 цифры'
+                                }
                             />
                         </Card>
                     </Grid>
