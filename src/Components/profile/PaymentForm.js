@@ -45,43 +45,6 @@ const styles = () => ({
     },
 });
 
-const CardNumberFormat = (props) => {
-    const { inputRef, onChange, ...rest } = props;
-    return (
-        <NumberFormat
-            {...rest}
-            onValueChange={(values) => {
-                onChange({
-                    target: {
-                        name: props.name,
-                        value: values.value,
-                    },
-                });
-            }}
-            format="#### #### #### ####"
-            mask="_"
-        />
-    );
-};
-const CardCVCFormat = (props) => {
-    const { inputRef, onChange, ...rest } = props;
-    return (
-        <NumberFormat
-            {...rest}
-            onValueChange={(values) => {
-                onChange({
-                    target: {
-                        name: props.name,
-                        value: values.value,
-                    },
-                });
-            }}
-            format="###"
-            mask="_"
-        />
-    );
-};
-
 const PaymentForm = ({
     classes,
     token,
@@ -95,12 +58,37 @@ const PaymentForm = ({
 
     const onSubmit = (data) => {
         const cardNumber = data.card_number;
-        const expiryDate = data.card_date;
+        const expiryDate = data.card_date.format('MM/YY');
         const cardName = data.card_owner;
         const cvc = data.card_cvc;
 
-        console.log(cardNumber, expiryDate, cardName, cvc, token);
-        // saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
+        saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
+    };
+    const CardNumberFormat = (props) => {
+        const { inputRef, onChange, ...rest } = props;
+        return (
+            <NumberFormat
+                {...rest}
+                onValueChange={(values) => {
+                    setValue('card_number', values.value);
+                }}
+                format="#### #### #### ####"
+                mask="_"
+            />
+        );
+    };
+    const CardCVCFormat = (props) => {
+        const { inputRef, onChange, ...rest } = props;
+        return (
+            <NumberFormat
+                {...rest}
+                onValueChange={(values) => {
+                    setValue('card_cvc', values.value);
+                }}
+                format="###"
+                mask="_"
+            />
+        );
     };
 
     useEffect(() => {
@@ -130,13 +118,18 @@ const PaymentForm = ({
                         <Card className={classes.card} elevation={3}>
                             <MCIcon />
                             <Controller
-                                as={<TextField margin="normal" />}
+                                as={TextField}
+                                margin="normal"
                                 label="Номер карты"
                                 placeholder="0000 0000 0000 0000"
                                 name="card_number"
                                 control={control}
                                 required
                                 defaultValue=""
+                                InputProps={{
+                                    inputComponent: CardNumberFormat,
+                                }}
+                                InputLabelProps={{ shrink: true }}
                             />
                             <Controller
                                 as={DatePicker}
@@ -147,30 +140,28 @@ const PaymentForm = ({
                                 defaultValue=""
                                 margin="normal"
                                 format="MM/YY"
+                                clearable
                                 views={['year', 'month']}
+                                InputLabelProps={{ shrink: true }}
                             />
                         </Card>
                     </Grid>
                     <Grid item>
                         <Card className={classes.card} elevation={3}>
                             <Controller
-                                as={<TextField margin="normal" />}
+                                as={TextField}
+                                margin="normal"
                                 label="Имя владельца"
                                 placeholder="Имя владельца"
                                 name="card_owner"
                                 control={control}
                                 required
                                 defaultValue=""
+                                InputLabelProps={{ shrink: true }}
                             />
                             <Controller
-                                as={
-                                    <TextField
-                                        margin="normal"
-                                        // InputProps={{
-                                        //     inputComponent: CardCVCFormat,
-                                        // }}
-                                    />
-                                }
+                                as={TextField}
+                                margin="normal"
                                 label="CVC"
                                 placeholder="CVC"
                                 name="card_cvc"
@@ -178,6 +169,14 @@ const PaymentForm = ({
                                 control={control}
                                 required
                                 defaultValue=""
+                                InputProps={{
+                                    inputComponent: CardCVCFormat,
+                                }}
+                                InputLabelProps={{ shrink: true }}
+                                rules={{
+                                    minLength: 3,
+                                    maxLength: 3,
+                                }}
                             />
                         </Card>
                     </Grid>
