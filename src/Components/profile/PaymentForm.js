@@ -130,6 +130,11 @@ const PaymentForm = ({
                                     inputComponent: CardNumberFormat,
                                 }}
                                 InputLabelProps={{ shrink: true }}
+                                rules={{ minLength: 16 }}
+                                error={!!errors.card_number}
+                                helperText={
+                                    errors.card_number && 'должно быть 16 цифр'
+                                }
                             />
                             <Controller
                                 as={DatePicker}
@@ -143,6 +148,11 @@ const PaymentForm = ({
                                 clearable
                                 views={['year', 'month']}
                                 InputLabelProps={{ shrink: true }}
+                                rules={{ required: true }}
+                                error={!!errors.card_date}
+                                helperText={
+                                    errors.card_date && 'Необходимо заполнить'
+                                }
                             />
                         </Card>
                     </Grid>
@@ -159,7 +169,7 @@ const PaymentForm = ({
                                 defaultValue=""
                                 InputLabelProps={{ shrink: true }}
                                 rules={{ pattern: /^[A-Z]+\s[A-Z]+$/ }}
-                                error={errors.card_owner}
+                                error={!!errors.card_owner}
                                 helperText={
                                     errors.card_owner && 'формат IVAN IVANOV'
                                 }
@@ -181,7 +191,7 @@ const PaymentForm = ({
                                 rules={{
                                     pattern: /^\d{3}$/,
                                 }}
-                                error={errors.card_cvc}
+                                error={!!errors.card_cvc}
                                 helperText={
                                     errors.card_cvc && 'должно быть 3 цифры'
                                 }
