@@ -13,6 +13,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUserRequest } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
+import { errorMsg } from '../../helpers/helpFunc';
 
 const styles = () => ({
     paper: {
@@ -24,7 +25,7 @@ const styles = () => ({
 });
 
 const LoginForm = ({ classes, loginUserRequest }) => {
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit, errors } = useForm();
 
     const onSubmit = (data) => {
         const { email, password } = data;
@@ -33,7 +34,6 @@ const LoginForm = ({ classes, loginUserRequest }) => {
             loginUserRequest({ email, password });
         }
     };
-
     return (
         <Paper className={classes.paper}>
             <form
@@ -68,10 +68,16 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                         label="Имя пользователя"
                         placeholder="Имя пользователя"
                         name="email"
-                        type="email"
+                        // type="email"
                         control={control}
-                        required
                         defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{
+                            required: true,
+                            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        }}
+                        error={!!errors.email}
+                        helperText={errorMsg(errors.email)}
                     />
                     <Controller
                         as={TextField}
@@ -81,8 +87,11 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                         name="password"
                         type="password"
                         control={control}
-                        required
                         defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{ required: true, minLength: 6 }}
+                        error={!!errors.password}
+                        helperText={errorMsg(errors.password)}
                     />
                     <Grid align="right">
                         <Button
