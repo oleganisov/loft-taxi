@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { registerUserRequest } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { errorMsg } from '../../helpers/helpFunc';
-import { emailPattern } from '../../helpers/constant';
+import { EMAIL_REGEXP } from '../../helpers/constant';
 
 const styles = () => ({
     paper: {
@@ -75,7 +75,7 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         InputLabelProps={{ required: true }}
                         rules={{
                             required: true,
-                            ...emailPattern,
+                            pattern: EMAIL_REGEXP,
                         }}
                         error={!!errors.email}
                         helperText={errorMsg(errors.email)}
