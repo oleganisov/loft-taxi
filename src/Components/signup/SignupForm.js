@@ -13,6 +13,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUserRequest } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
+import { errorMsg } from '../../helpers/helpFunc';
+import { emailPattern } from '../../helpers/constant';
 
 const styles = () => ({
     paper: {
@@ -24,7 +26,7 @@ const styles = () => ({
     },
 });
 const SignupForm = ({ classes, registerUserRequest }) => {
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         const { email, password, name, surname } = data;
 
@@ -67,10 +69,16 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         label="Адрес электронной почты"
                         placeholder="Адрес электронной почты"
                         name="email"
-                        type="email"
+                        // type="email"
                         control={control}
-                        required
                         defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{
+                            required: true,
+                            ...emailPattern,
+                        }}
+                        error={!!errors.email}
+                        helperText={errorMsg(errors.email)}
                     />
                     <Grid>
                         <Controller
@@ -80,8 +88,11 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                             placeholder="Имя"
                             name="name"
                             control={control}
-                            required
                             defaultValue=""
+                            InputLabelProps={{ required: true }}
+                            rules={{ required: true }}
+                            error={!!errors.name}
+                            helperText={errorMsg(errors.name)}
                         />
                         <Controller
                             as={TextField}
@@ -90,8 +101,11 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                             placeholder="Фамилия"
                             name="surname"
                             control={control}
-                            required
                             defaultValue=""
+                            InputLabelProps={{ required: true }}
+                            rules={{ required: true }}
+                            error={!!errors.surname}
+                            helperText={errorMsg(errors.surname)}
                         />
                     </Grid>
                     <Controller
@@ -102,8 +116,11 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         name="password"
                         type="password"
                         control={control}
-                        required
                         defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{ required: true, minLength: 6 }}
+                        error={!!errors.password}
+                        helperText={errorMsg(errors.password)}
                     />
                     <Grid align="right">
                         <Button

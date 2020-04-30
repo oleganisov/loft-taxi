@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { loginUserRequest } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { errorMsg } from '../../helpers/helpFunc';
+import { emailPattern } from '../../helpers/constant';
 
 const styles = () => ({
     paper: {
@@ -74,7 +75,7 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                         InputLabelProps={{ required: true }}
                         rules={{
                             required: true,
-                            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            ...emailPattern,
                         }}
                         error={!!errors.email}
                         helperText={errorMsg(errors.email)}
