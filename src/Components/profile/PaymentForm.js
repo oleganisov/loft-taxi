@@ -23,6 +23,7 @@ import {
 } from '../../modules/card';
 import { getToken } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
+import { errorMsg } from '../../helpers/helpFunc';
 
 const styles = () => ({
     paper: {
@@ -150,9 +151,7 @@ const PaymentForm = ({
                                 InputLabelProps={{ shrink: true }}
                                 rules={{ required: true }}
                                 error={!!errors.card_date}
-                                helperText={
-                                    errors.card_date && 'Необходимо заполнить'
-                                }
+                                helperText={errorMsg(errors.card_date)}
                             />
                         </Card>
                     </Grid>
@@ -162,7 +161,7 @@ const PaymentForm = ({
                                 as={TextField}
                                 margin="normal"
                                 label="Имя владельца"
-                                placeholder="Имя владельца"
+                                placeholder="IVAN IVANOV"
                                 name="card_owner"
                                 control={control}
                                 required
