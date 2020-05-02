@@ -24,7 +24,7 @@ const styles = () => ({
 const OrderForm = ({ classes, getRouteRequest, addresses, orderTaxi }) => {
     const [addressFrom, setAddressFrom] = useState(undefined);
     const [addressTo, setAddressTo] = useState(undefined);
-    const { control, handleSubmit, errors } = useForm();
+    const { control, handleSubmit } = useForm();
 
     let addressListFrom = addresses
         .filter((item) => (addressTo ? item !== addressTo.value : true))
