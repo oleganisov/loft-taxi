@@ -1,4 +1,4 @@
-import { recordSaga } from '../recordSaga';
+import { recordSaga } from '../../helpers/testUtils';
 import * as sagas from './sagas';
 import * as api from './api';
 import {

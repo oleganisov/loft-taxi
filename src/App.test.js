@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import createStore from './store';
 import { Provider } from 'react-redux';
-import { render, fireEvent, wait } from '@testing-library/react';
+import { fireEvent, wait } from '@testing-library/react';
 import App from './App';
+import { renderWithProviders } from './helpers/testUtils';
 
 const store = createStore();
 jest.mock('./Components/map', () => () => <div>Map</div>);
@@ -24,13 +25,7 @@ describe('App render/print', () => {
         ReactDOM.unmountComponentAtNode(div);
     });
     it('print', () => {
-        const { debug } = render(
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        );
+        const { debug } = renderWithProviders(<App />);
         // Pretty print the DOM tree of your render
         debug();
     });
@@ -39,13 +34,8 @@ describe('App render/print', () => {
 describe('Login/Signup', () => {
     let getByTestId, getByText;
     beforeEach(() => {
-        const queries = render(
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        );
+        const queries = renderWithProviders(<App />);
+
         getByTestId = queries.getByTestId;
         getByText = queries.getByText;
     });
