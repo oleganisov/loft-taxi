@@ -13,7 +13,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUserRequest } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
-import { errorMsg } from '../../helpers/helpFunc';
 import { EMAIL_REGEXP } from '../../helpers/constant';
 
 const styles = () => ({
@@ -74,11 +73,14 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         defaultValue=""
                         InputLabelProps={{ required: true }}
                         rules={{
-                            required: true,
-                            pattern: EMAIL_REGEXP,
+                            required: 'Обязательно для заполнения',
+                            pattern: {
+                                value: EMAIL_REGEXP,
+                                message: 'Неверный формат для email',
+                            },
                         }}
                         error={!!errors.email}
-                        helperText={errorMsg(errors.email)}
+                        helperText={errors.email && errors.email.message}
                     />
                     <Grid>
                         <Controller
@@ -90,9 +92,9 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                             control={control}
                             defaultValue=""
                             InputLabelProps={{ required: true }}
-                            rules={{ required: true }}
+                            rules={{ required: 'Обязательно для заполнения' }}
                             error={!!errors.name}
-                            helperText={errorMsg(errors.name)}
+                            helperText={errors.name && errors.name.message}
                         />
                         <Controller
                             as={TextField}
@@ -103,9 +105,11 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                             control={control}
                             defaultValue=""
                             InputLabelProps={{ required: true }}
-                            rules={{ required: true }}
+                            rules={{ required: 'Обязательно для заполнения' }}
                             error={!!errors.surname}
-                            helperText={errorMsg(errors.surname)}
+                            helperText={
+                                errors.surname && errors.surname.message
+                            }
                         />
                     </Grid>
                     <Controller
@@ -118,9 +122,15 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         control={control}
                         defaultValue=""
                         InputLabelProps={{ required: true }}
-                        rules={{ required: true, minLength: 6 }}
+                        rules={{
+                            required: 'Обязательно для заполнения',
+                            minLength: {
+                                value: 6,
+                                message: 'Минимальная длина 6 символов',
+                            },
+                        }}
                         error={!!errors.password}
-                        helperText={errorMsg(errors.password)}
+                        helperText={errors.password && errors.password.message}
                     />
                     <Grid align="right">
                         <Button

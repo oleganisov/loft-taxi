@@ -23,7 +23,6 @@ import {
 } from '../../modules/card';
 import { getToken } from '../../modules/auth';
 import { useForm, Controller } from 'react-hook-form';
-import { errorMsg } from '../../helpers/helpFunc';
 
 const styles = () => ({
     paper: {
@@ -125,16 +124,25 @@ const PaymentForm = ({
                                 placeholder="0000 0000 0000 0000"
                                 name="card_number"
                                 control={control}
-                                required
                                 defaultValue=""
                                 InputProps={{
                                     inputComponent: CardNumberFormat,
                                 }}
-                                InputLabelProps={{ shrink: true }}
-                                rules={{ minLength: 16 }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                    minLength: {
+                                        value: 16,
+                                        message: 'должно быть 16 цифр',
+                                    },
+                                }}
                                 error={!!errors.card_number}
                                 helperText={
-                                    errors.card_number && 'должно быть 16 цифр'
+                                    errors.card_number &&
+                                    errors.card_number.message
                                 }
                             />
                             <Controller
@@ -142,16 +150,22 @@ const PaymentForm = ({
                                 label="Срок действия"
                                 name="card_date"
                                 control={control}
-                                required
                                 defaultValue=""
                                 margin="normal"
                                 format="MM/YY"
                                 clearable
                                 views={['year', 'month']}
-                                InputLabelProps={{ shrink: true }}
-                                rules={{ required: true }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                }}
                                 error={!!errors.card_date}
-                                helperText={errorMsg(errors.card_date)}
+                                helperText={
+                                    errors.card_date && errors.card_date.message
+                                }
                             />
                         </Card>
                     </Grid>
@@ -164,13 +178,22 @@ const PaymentForm = ({
                                 placeholder="IVAN IVANOV"
                                 name="card_owner"
                                 control={control}
-                                required
                                 defaultValue=""
-                                InputLabelProps={{ shrink: true }}
-                                rules={{ pattern: /^[A-Z]+\s[A-Z]+$/ }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                    pattern: {
+                                        value: /^[A-Z]+\s[A-Z]+$/,
+                                        message: 'формат IVAN IVANOV',
+                                    },
+                                }}
                                 error={!!errors.card_owner}
                                 helperText={
-                                    errors.card_owner && 'формат IVAN IVANOV'
+                                    errors.card_owner &&
+                                    errors.card_owner.message
                                 }
                             />
                             <Controller
@@ -181,18 +204,24 @@ const PaymentForm = ({
                                 name="card_cvc"
                                 // type="password"
                                 control={control}
-                                required
                                 defaultValue=""
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}
-                                InputLabelProps={{ shrink: true }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
                                 rules={{
-                                    pattern: /^\d{3}$/,
+                                    required: 'Обязательно для заполнения',
+                                    pattern: {
+                                        value: /^\d{3}$/,
+                                        message: 'должно быть 3 цифры',
+                                    },
                                 }}
                                 error={!!errors.card_cvc}
                                 helperText={
-                                    errors.card_cvc && 'должно быть 3 цифры'
+                                    errors.card_cvc && errors.card_cvc.message
                                 }
                             />
                         </Card>
