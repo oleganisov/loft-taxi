@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Paper } from '@material-ui/core';
@@ -7,9 +7,15 @@ import OrderForm from './OrderForm';
 import GoProfile from './GoProfile';
 import OrderSuccess from './OrderSuccess';
 
-const Order = ({ isProfileUpdated, isOrdered, reset, orderTaxi }) => {
+const Order = ({ isProfileUpdated, reset }) => {
+    const [isOrdered, setIsOrdered] = useState(false);
+
     const handleClick = () => {
         reset();
+        setIsOrdered(false);
+    };
+    const orderTaxi = () => {
+        setIsOrdered(true);
     };
 
     const Layout = () => {
@@ -34,9 +40,7 @@ const Order = ({ isProfileUpdated, isOrdered, reset, orderTaxi }) => {
 
 Order.propTypes = {
     isProfileUpdated: PropTypes.bool.isRequired,
-    isOrdered: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
-    orderTaxi: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
     isProfileUpdated: getIsProfileUpdated(state),
