@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Background from '../common/Background';
 import PaymentForm from './PaymentForm';
+import CardSaved from './CardSaved';
 import Header from '../common/Header';
 
 const styles = () => ({
@@ -11,6 +12,8 @@ const styles = () => ({
 });
 
 const Profile = ({ classes }) => {
+    const [isCardSaved, setIsCardSaved] = useState(false);
+
     return (
         <Background>
             <Header />
@@ -26,7 +29,11 @@ const Profile = ({ classes }) => {
                     justify="center"
                     alignItems="center"
                 >
-                    <PaymentForm />
+                    {isCardSaved ? (
+                        <CardSaved />
+                    ) : (
+                        <PaymentForm setIsCardSaved={setIsCardSaved} />
+                    )}
                 </Grid>
             </Grid>
         </Background>

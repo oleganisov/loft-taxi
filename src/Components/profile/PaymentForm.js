@@ -53,6 +53,7 @@ const PaymentForm = ({
     cvc,
     expDate,
     saveCardRequest,
+    setIsCardSaved,
 }) => {
     const { control, handleSubmit, setValue, errors } = useForm();
 
@@ -63,6 +64,7 @@ const PaymentForm = ({
         const cvc = data.card_cvc;
 
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
+        setIsCardSaved(true);
     };
     const CardNumberFormat = (props) => {
         const { inputRef, onChange, ...rest } = props;
@@ -252,6 +254,7 @@ PaymentForm.propTypes = {
     cvc: PropTypes.string,
     expDate: PropTypes.string,
     saveCardRequest: PropTypes.func.isRequired,
+    setIsCardSaved: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
