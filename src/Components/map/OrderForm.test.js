@@ -29,5 +29,9 @@ describe('Order form', () => {
         });
         wait(() => expect(orderTaxiMock).toHaveBeenCalled());
         wait(() => expect(/заказ размещён/i).toBeInTheDocument());
+
+        wait(() => fireEvent.click(getByText(/сделать новый заказ/i)));
+
+        wait(() => expect(/откуда/i).toBeInTheDocument());
     });
 });

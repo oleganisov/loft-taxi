@@ -19,7 +19,7 @@ describe('Payment form', () => {
         wait(() => expect(getByText('Имя владельца')).toBeInTheDocument());
         wait(() => expect(getByText(/cvc/i)).toBeInTheDocument());
     });
-    it('save card', () => {
+    it('save card and go to map', () => {
         const { getByText } = renderWithProviders(
             <PaymentForm setIsCardSaved={setIsCardSavedMock} />,
             createStore(rootReducer, { auth: { token: '111' } })
@@ -34,5 +34,9 @@ describe('Payment form', () => {
             },
         });
         wait(() => expect(setIsCardSavedMock).toHaveBeenCalled());
+
+        wait(() => fireEvent.click(getByText(/перейти/i)));
+
+        wait(() => expect(getByText(/откуда/i)).toBeInTheDocument());
     });
 });
