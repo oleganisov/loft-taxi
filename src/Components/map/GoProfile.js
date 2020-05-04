@@ -5,11 +5,14 @@ import { Grid, Button, Typography, Paper } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = () => ({
+    text: {
+        marginBottom: 30,
+    },
     paper: {
         position: 'absolute',
         top: 0,
         left: 20,
-        maxWidth: '30%',
+        maxWidth: '35%',
         padding: '44px 60px',
         marginTop: '40px',
     },

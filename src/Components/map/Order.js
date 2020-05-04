@@ -7,8 +7,8 @@ import OrderForm from './OrderForm';
 import GoProfile from './GoProfile';
 import OrderSuccess from './OrderSuccess';
 
-const Order = ({ isProfileUpdated, reset }) => {
-    const [isOrdered, setIsOrdered] = useState(false);
+const Order = ({ isProfileUpdated, reset, isOrderedInit = false }) => {
+    const [isOrdered, setIsOrdered] = useState(isOrderedInit);
 
     const handleClick = () => {
         reset();
@@ -41,6 +41,7 @@ const Order = ({ isProfileUpdated, reset }) => {
 Order.propTypes = {
     isProfileUpdated: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
+    isOrderedInit: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
     isProfileUpdated: getIsProfileUpdated(state),
