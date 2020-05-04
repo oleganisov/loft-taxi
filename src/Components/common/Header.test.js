@@ -1,22 +1,13 @@
 import React from 'react';
-import { render, fireEvent, wait } from '@testing-library/react';
+import { fireEvent, wait } from '@testing-library/react';
 import Header from './Header';
-import createStore from '../../store';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-
-const store = createStore();
+import { renderWithProviders } from '../../helpers/testUtils';
 
 describe('Header menu', () => {
     let getByText;
     beforeEach(() => {
-        const queries = render(
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Header />
-                </BrowserRouter>
-            </Provider>
-        );
+        const queries = renderWithProviders(<Header />);
+
         getByText = queries.getByText;
     });
 

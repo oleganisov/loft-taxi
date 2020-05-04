@@ -1,95 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { Container, Paper } from '@material-ui/core';
 import { getIsProfileUpdated } from '../../modules/card';
 import OrderForm from './OrderForm';
+import GoProfile from './GoProfile';
+import OrderSuccess from './OrderSuccess';
 
-const styles = () => ({
-    text: {
-        marginBottom: 30,
-    },
-    paper: {
-        position: 'absolute',
-        top: 0,
-        left: 20,
-        maxWidth: '30%',
-        padding: '44px 60px',
-        marginTop: '40px',
-    },
-});
+const Order = ({ isProfileUpdated, reset, isOrderedInit = false }) => {
+    const [isOrdered, setIsOrdered] = useState(isOrderedInit);
 
-const Order = ({ classes, isProfileUpdated, isOrdered, reset, orderTaxi }) => {
     const handleClick = () => {
         reset();
+        setIsOrdered(false);
+    };
+    const orderTaxi = () => {
+        setIsOrdered(true);
     };
 
     const Layout = () => {
         if (!isProfileUpdated) {
-            return (
-                <Paper className={classes.paper}>
-                    <Grid container direction="column">
-                        <Typography
-                            className={classes.text}
-                            component="h1"
-                            variant="h4"
-                            align="left"
-                        >
-                            Заполните платежные данные
-                        </Typography>
-                        <Typography className={classes.text}>
-                            Укажите информацию о банковской карте, чтобы сделать
-                            заказ.
-                        </Typography>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            component={RouterLink}
-                            to="/profile"
-                        >
-                            Перейти в профиль
-                        </Button>
-                    </Grid>
-                </Paper>
-            );
+            return <GoProfile />;
         }
         if (isOrdered) {
-            return (
-                <Paper className={classes.paper}>
-                    <Grid container direction="column">
-                        <Typography
-                            className={classes.text}
-                            component="h1"
-                            variant="h4"
-                            align="left"
-                        >
-                            Заказ размещён
-                        </Typography>
-                        <Typography className={classes.text}>
-                            Ваше такси уже едет к вам. Прибудет приблизительно
-                            через 10 минут.
-                        </Typography>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={handleClick}
-                        >
-                            Сделать новый заказ
-                        </Button>
-                    </Grid>
-                </Paper>
-            );
+            return <OrderSuccess handleClick={handleClick} />;
         }
         return <OrderForm orderTaxi={orderTaxi} />;
     };
     return (
-        <Container className={classes.container}>
-            <Paper className={classes.order}>
-                <Container className={classes.orderContainer}>
+        <Container>
+            <Paper>
+                <Container>
                     <Layout />
                 </Container>
             </Paper>
@@ -98,14 +39,12 @@ const Order = ({ classes, isProfileUpdated, isOrdered, reset, orderTaxi }) => {
 };
 
 Order.propTypes = {
-    classes: PropTypes.object.isRequired,
     isProfileUpdated: PropTypes.bool.isRequired,
-    isOrdered: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
-    orderTaxi: PropTypes.func.isRequired,
+    isOrderedInit: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
     isProfileUpdated: getIsProfileUpdated(state),
 });
 
-export default connect(mapStateToProps, null)(withStyles(styles)(Order));
+export default connect(mapStateToProps, null)(Order);

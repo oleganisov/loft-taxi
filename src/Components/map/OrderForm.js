@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Grid, FormControl, Button, Paper } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { getAddressList, getRouteRequest } from '../../modules/route';
+import { useForm, Controller } from 'react-hook-form';
 
 const styles = () => ({
     paper: {
@@ -23,6 +24,7 @@ const styles = () => ({
 const OrderForm = ({ classes, getRouteRequest, addresses, orderTaxi }) => {
     const [addressFrom, setAddressFrom] = useState(undefined);
     const [addressTo, setAddressTo] = useState(undefined);
+    const { control, handleSubmit } = useForm();
 
     let addressListFrom = addresses
         .filter((item) => (addressTo ? item !== addressTo.value : true))
@@ -35,13 +37,14 @@ const OrderForm = ({ classes, getRouteRequest, addresses, orderTaxi }) => {
             return { label: item, value: item };
         });
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        const address1 = e.target.address_from.value;
-        const address2 = e.target.address_to.value;
+    const onSubmit = (data) => {
+        const address1 = data.address_from && data.address_from.value;
+        const address2 = data.address_to && data.address_to.value;
 
-        getRouteRequest({ address1, address2 });
-        orderTaxi();
+        if (address1 && address2) {
+            getRouteRequest({ address1, address2 });
+            orderTaxi();
+        }
     };
 
     return (
@@ -49,27 +52,37 @@ const OrderForm = ({ classes, getRouteRequest, addresses, orderTaxi }) => {
             <form
                 id="search-form"
                 data-testid="search-form"
-                onSubmit={handlerSubmit}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <Grid container direction="column">
                     <FormControl className={classes.fromControl}>
-                        <Select
+                        <Controller
+                            as={Select}
                             name="address_from"
                             placeholder="Откуда"
                             isClearable
                             options={addressListFrom}
                             value={addressFrom}
-                            onChange={setAddressFrom}
+                            onChange={([selected]) => {
+                                setAddressFrom(selected);
+                                return selected;
+                            }}
+                            control={control}
                         />
                     </FormControl>
                     <FormControl className={classes.fromControl}>
-                        <Select
+                        <Controller
+                            as={Select}
                             name="address_to"
                             placeholder="Куда"
                             isClearable
                             options={addressListTo}
                             value={addressTo}
-                            onChange={setAddressTo}
+                            onChange={([selected]) => {
+                                setAddressTo(selected);
+                                return selected;
+                            }}
+                            control={control}
                         />
                     </FormControl>
                     <Grid align="right">

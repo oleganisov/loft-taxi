@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
-    FormControl,
-    InputLabel,
-    Input,
+    TextField,
     Button,
     Typography,
     Link,
@@ -14,6 +12,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUserRequest } from '../../modules/auth';
+import { useForm, Controller } from 'react-hook-form';
+import { EMAIL_REGEXP } from '../../helpers/constant';
 
 const styles = () => ({
     paper: {
@@ -25,29 +25,19 @@ const styles = () => ({
 });
 
 const LoginForm = ({ classes, loginUserRequest }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const { control, handleSubmit, errors } = useForm();
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = (data) => {
+        const { email, password } = data;
 
-        if (e.target.username && e.target.password) {
-            const email = e.target.username.value;
-            const password = e.target.password.value;
+        if (email && password) {
             loginUserRequest({ email, password });
         }
     };
-    const handlerChangeUsername = (e) => {
-        setUsername(e.target.value);
-    };
-    const handlerChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
     return (
         <Paper className={classes.paper}>
             <form
-                onSubmit={handlerSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 id="login-form"
                 data-testid="login-form"
             >
@@ -72,34 +62,46 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                             Зарегистрируйтесь
                         </Link>
                     </Typography>
-                    <FormControl required>
-                        <InputLabel htmlFor="username">
-                            Имя пользователя
-                        </InputLabel>
-                        <Input
-                            className={classes.input}
-                            id="username"
-                            name="username"
-                            type="text"
-                            placeholder="Имя пользователя"
-                            required
-                            onChange={handlerChangeUsername}
-                            value={username}
-                        />
-                    </FormControl>
-                    <FormControl required>
-                        <InputLabel htmlFor="password">Пароль</InputLabel>
-                        <Input
-                            className={classes.input}
-                            id="password"
-                            name="password"
-                            type="password"
-                            placeholder="Пароль"
-                            required
-                            onChange={handlerChangePassword}
-                            value={password}
-                        />
-                    </FormControl>
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Имя пользователя"
+                        placeholder="Имя пользователя"
+                        name="email"
+                        // type="email"
+                        control={control}
+                        defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{
+                            required: 'Обязательно для заполнения',
+                            pattern: {
+                                value: EMAIL_REGEXP,
+                                message: 'Неверный формат для email',
+                            },
+                        }}
+                        error={!!errors.email}
+                        helperText={errors.email && errors.email.message}
+                    />
+                    <Controller
+                        as={TextField}
+                        className={classes.input}
+                        label="Пароль"
+                        placeholder="Пароль"
+                        name="password"
+                        type="password"
+                        control={control}
+                        defaultValue=""
+                        InputLabelProps={{ required: true }}
+                        rules={{
+                            required: 'Обязательно для заполнения',
+                            minLength: {
+                                value: 6,
+                                message: 'Минимальная длина 6 символов',
+                            },
+                        }}
+                        error={!!errors.password}
+                        helperText={errors.password && errors.password.message}
+                    />
                     <Grid align="right">
                         <Button
                             variant="contained"

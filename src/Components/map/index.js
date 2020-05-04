@@ -17,7 +17,6 @@ const styles = {
 const Map = ({ coordinates }) => {
     const [map, setMap] = useState(null);
     const mapContainerRef = useRef(null);
-    const [isOrdered, setIsOrdered] = useState(false);
 
     useEffect(() => {
         mapboxgl.accessToken =
@@ -48,14 +47,9 @@ const Map = ({ coordinates }) => {
         }
     }, [map, coordinates]);
 
-    const orderTaxi = () => {
-        setIsOrdered(true);
-    };
-
     const reset = () => {
         map.removeLayer('route');
         map.removeSource('route');
-        setIsOrdered(false);
     };
 
     return (
@@ -67,11 +61,7 @@ const Map = ({ coordinates }) => {
                     ref={(el) => (mapContainerRef.current = el)}
                     style={styles}
                 />
-                <Order
-                    reset={reset}
-                    orderTaxi={orderTaxi}
-                    isOrdered={isOrdered}
-                />
+                <Order reset={reset} />
             </div>
         </>
     );

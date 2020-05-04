@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import {
@@ -22,6 +22,7 @@ import {
     getCardName,
 } from '../../modules/card';
 import { getToken } from '../../modules/auth';
+import { useForm, Controller } from 'react-hook-form';
 
 const styles = () => ({
     paper: {
@@ -44,43 +45,6 @@ const styles = () => ({
     },
 });
 
-const CardNumberFormat = (props) => {
-    const { inputRef, onChange, ...rest } = props;
-    return (
-        <NumberFormat
-            {...rest}
-            onValueChange={(values) => {
-                onChange({
-                    target: {
-                        name: props.name,
-                        value: values.value,
-                    },
-                });
-            }}
-            format="#### #### #### ####"
-            mask="_"
-        />
-    );
-};
-const CardCVCFormat = (props) => {
-    const { inputRef, onChange, ...rest } = props;
-    return (
-        <NumberFormat
-            {...rest}
-            onValueChange={(values) => {
-                onChange({
-                    target: {
-                        name: props.name,
-                        value: values.value,
-                    },
-                });
-            }}
-            format="###"
-            mask="_"
-        />
-    );
-};
-
 const PaymentForm = ({
     classes,
     token,
@@ -89,30 +53,54 @@ const PaymentForm = ({
     cvc,
     expDate,
     saveCardRequest,
+    setIsCardSaved,
 }) => {
-    const [inputNumber, setInputNumber] = useState('');
-    const [inputName, setInputName] = useState('');
-    const [inputDate, setInputDate] = useState(new Date());
-    const [inputCVC, setInputCVC] = useState('');
+    const { control, handleSubmit, setValue, errors } = useForm();
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        const cardNumber = e.target.card_number.value;
-        const expiryDate = e.target.card_date.value;
-        const cardName = e.target.card_owner.value;
-        const cvc = e.target.card_cvc.value;
+    const onSubmit = (data) => {
+        const cardNumber = data.card_number;
+        const expiryDate = data.card_date.format('MM/YY');
+        const cardName = data.card_owner;
+        const cvc = data.card_cvc;
 
         saveCardRequest({ cardNumber, expiryDate, cardName, cvc, token });
+        setIsCardSaved(true);
+    };
+    const CardNumberFormat = (props) => {
+        const { inputRef, onChange, ...rest } = props;
+        return (
+            <NumberFormat
+                {...rest}
+                onValueChange={(values) => {
+                    setValue('card_number', values.value);
+                }}
+                format="#### #### #### ####"
+                mask="_"
+            />
+        );
+    };
+    const CardCVCFormat = (props) => {
+        const { inputRef, onChange, ...rest } = props;
+        return (
+            <NumberFormat
+                {...rest}
+                onValueChange={(values) => {
+                    setValue('card_cvc', values.value);
+                }}
+                format="###"
+                mask="_"
+            />
+        );
     };
 
     useEffect(() => {
-        cardNumber ? setInputNumber(cardNumber) : setInputNumber('');
-        cardName ? setInputName(cardName) : setInputName('');
-        cvc ? setInputCVC(cvc) : setInputCVC('');
+        setValue('card_number', cardNumber || '');
+        setValue('card_owner', cardName || '');
+        setValue('card_cvc', cvc || '');
         expDate
-            ? setInputDate(moment('01/' + expDate, 'DD/MM/YY'))
-            : setInputDate(new Date());
-    }, [cardNumber, cardName, cvc, expDate]);
+            ? setValue('card_date', moment('01/' + expDate, 'DD/MM/YY'))
+            : setValue('card_date', new Date());
+    }, [cardNumber, cardName, cvc, expDate, setValue]);
 
     return (
         <Paper className={classes.paper}>
@@ -122,66 +110,117 @@ const PaymentForm = ({
             <Typography align="center" className={classes.subtitle}>
                 Способ оплаты
             </Typography>
-            <form onSubmit={handlerSubmit} data-testid="payment-form">
+            <form onSubmit={handleSubmit(onSubmit)} data-testid="payment-form">
                 <Grid container justify="center" spacing={4}>
                     <Grid item>
                         <Card className={classes.card} elevation={3}>
                             <MCIcon />
-                            <TextField
-                                id="card_number"
-                                name="card_number"
+                            <Controller
+                                as={TextField}
+                                margin="normal"
                                 label="Номер карты"
                                 placeholder="0000 0000 0000 0000"
-                                required
-                                margin="normal"
-                                value={inputNumber}
-                                onChange={(e) => setInputNumber(e.target.value)}
+                                name="card_number"
+                                control={control}
+                                defaultValue=""
                                 InputProps={{
                                     inputComponent: CardNumberFormat,
                                 }}
-                                InputLabelProps={{ shrink: true }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                    minLength: {
+                                        value: 16,
+                                        message: 'должно быть 16 цифр',
+                                    },
+                                }}
+                                error={!!errors.card_number}
+                                helperText={
+                                    errors.card_number &&
+                                    errors.card_number.message
+                                }
                             />
-                            <DatePicker
-                                id="card_date"
-                                name="card_date"
+                            <Controller
+                                as={DatePicker}
                                 label="Срок действия"
-                                required
+                                name="card_date"
+                                control={control}
+                                defaultValue=""
                                 margin="normal"
-                                clearable
                                 format="MM/YY"
+                                clearable
                                 views={['year', 'month']}
-                                value={inputDate}
-                                onChange={setInputDate}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                }}
+                                error={!!errors.card_date}
+                                helperText={
+                                    errors.card_date && errors.card_date.message
+                                }
                             />
                         </Card>
                     </Grid>
                     <Grid item>
                         <Card className={classes.card} elevation={3}>
-                            <TextField
-                                id="card_owner"
-                                name="card_owner"
-                                label="Имя владельца"
-                                placeholder="Имя владельца"
-                                required
+                            <Controller
+                                as={TextField}
                                 margin="normal"
-                                value={inputName}
-                                onChange={(e) => setInputName(e.target.value)}
-                                InputLabelProps={{ shrink: true }}
+                                label="Имя владельца"
+                                placeholder="IVAN IVANOV"
+                                name="card_owner"
+                                control={control}
+                                defaultValue=""
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                    pattern: {
+                                        value: /^[A-Z]+\s[A-Z]+$/,
+                                        message: 'формат IVAN IVANOV',
+                                    },
+                                }}
+                                error={!!errors.card_owner}
+                                helperText={
+                                    errors.card_owner &&
+                                    errors.card_owner.message
+                                }
                             />
-                            <TextField
-                                id="card_cvc"
-                                name="card_cvc"
+                            <Controller
+                                as={TextField}
+                                margin="normal"
                                 label="CVC"
                                 placeholder="CVC"
-                                required
-                                margin="normal"
-                                type="password"
-                                value={inputCVC}
-                                onChange={(e) => setInputCVC(e.target.value)}
+                                name="card_cvc"
+                                // type="password"
+                                control={control}
+                                defaultValue=""
                                 InputProps={{
                                     inputComponent: CardCVCFormat,
                                 }}
-                                InputLabelProps={{ shrink: true }}
+                                InputLabelProps={{
+                                    required: true,
+                                    shrink: true,
+                                }}
+                                rules={{
+                                    required: 'Обязательно для заполнения',
+                                    pattern: {
+                                        value: /^\d{3}$/,
+                                        message: 'должно быть 3 цифры',
+                                    },
+                                }}
+                                error={!!errors.card_cvc}
+                                helperText={
+                                    errors.card_cvc && errors.card_cvc.message
+                                }
                             />
                         </Card>
                     </Grid>
@@ -211,6 +250,7 @@ PaymentForm.propTypes = {
     cvc: PropTypes.string,
     expDate: PropTypes.string,
     saveCardRequest: PropTypes.func.isRequired,
+    setIsCardSaved: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
