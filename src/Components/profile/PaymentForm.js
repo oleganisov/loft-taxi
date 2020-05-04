@@ -94,13 +94,9 @@ const PaymentForm = ({
     };
 
     useEffect(() => {
-        cardNumber
-            ? setValue('card_number', cardNumber)
-            : setValue('card_number', '');
-        cardName
-            ? setValue('card_owner', cardName)
-            : setValue('card_owner', '');
-        cvc ? setValue('card_cvc', cvc) : setValue('card_cvc', '');
+        setValue('card_number', cardNumber || '');
+        setValue('card_owner', cardName || '');
+        setValue('card_cvc', cvc || '');
         expDate
             ? setValue('card_date', moment('01/' + expDate, 'DD/MM/YY'))
             : setValue('card_date', new Date());
