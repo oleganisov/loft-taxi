@@ -200,7 +200,6 @@ const PaymentForm = ({
                                 label="CVC"
                                 placeholder="CVC"
                                 name="card_cvc"
-                                // type="password"
                                 control={control}
                                 defaultValue=""
                                 InputProps={{

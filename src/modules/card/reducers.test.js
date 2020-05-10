@@ -1,9 +1,7 @@
 import reducers from './reducers';
 import {
-    // saveCardRequest,
     saveCardSuccess,
     saveCardFailure,
-    // fetchCardRequest,
     fetchCardSuccess,
     fetchCardFailure,
 } from './actions';

@@ -30,7 +30,6 @@ const createAppStore = () => {
         rootReducer,
         loadState(),
         compose(
-            // applyMiddleware(authFetchMiddleware, cardFetchMiddleware),
             applyMiddleware(sagaMiddleware),
             window.__REDUX_DEVTOOLS_EXTENSION__
                 ? window.__REDUX_DEVTOOLS_EXTENSION__()

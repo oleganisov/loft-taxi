@@ -1,9 +1,7 @@
 import reducers from './reducers';
 import {
-    // loginUserRequest,
     loginUserSuccess,
     loginUserFailure,
-    // registerUserRequest,
     registerUserSuccess,
     registerUserFailure,
 } from './actions';

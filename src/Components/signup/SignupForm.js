@@ -68,7 +68,6 @@ const SignupForm = ({ classes, registerUserRequest }) => {
                         label="Адрес электронной почты"
                         placeholder="Адрес электронной почты"
                         name="email"
-                        // type="email"
                         control={control}
                         defaultValue=""
                         InputLabelProps={{ required: true }}
