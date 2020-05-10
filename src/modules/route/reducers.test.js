@@ -1,9 +1,7 @@
 import reducers from './reducers';
 import {
-    // getRouteRequest,
     getRouteSuccess,
     getRouteFailure,
-    // getAddressListRequest,
     getAddressListSuccess,
     getAddressListFailure,
 } from './actions';

@@ -68,7 +68,6 @@ const LoginForm = ({ classes, loginUserRequest }) => {
                         label="Имя пользователя"
                         placeholder="Имя пользователя"
                         name="email"
-                        // type="email"
                         control={control}
                         defaultValue=""
                         InputLabelProps={{ required: true }}
